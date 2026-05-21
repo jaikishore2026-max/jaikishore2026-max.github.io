@@ -11,9 +11,10 @@ import {
   Target,
   Sparkles
 } from 'lucide-react'
+import type { LucideProps } from 'lucide-react'
 import { portfolioData } from '../lib/portfolio-data'
 
-const iconMap: Record<string, React.ComponentType<any>> = {
+const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   'terminal': Terminal,
   'code': Code,
   'coffee': Coffee,

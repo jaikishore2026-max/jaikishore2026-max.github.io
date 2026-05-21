@@ -34,7 +34,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl leading-tight tracking-tight text-white mb-6"
         >
-          Hey, I'm <span className="text-gradient text-glow-blue">{portfolioData.name}</span>
+          Hey, I&apos;m <span className="text-gradient text-glow-blue">{portfolioData.name}</span>
         </motion.h1>
 
         {/* Subtitle */}

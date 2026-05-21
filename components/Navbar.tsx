@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Github, Linkedin, Twitter } from 'lucide-react'
+import { Menu, X, Github } from 'lucide-react'
 import { portfolioData } from '../lib/portfolio-data'
 
 export default function Navbar() {
@@ -93,7 +93,7 @@ export default function Navbar() {
             href="#contact"
             className="px-5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider text-white border border-border-glass glass hover:border-accent-indigo/40 hover:bg-accent-indigo/10 transition-all duration-300"
           >
-            Let's Talk
+            Let&apos;s Talk
           </a>
         </div>
 
@@ -144,7 +144,7 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full text-center px-5 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-accent-blue to-accent-indigo hover:from-accent-indigo hover:to-accent-blue shadow-lg shadow-accent-indigo/20 transition-all duration-300"
             >
-              Let's Talk
+              Let&apos;s Talk
             </a>
           </div>
         </div>

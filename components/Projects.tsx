@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, ExternalLink, Filter, BarChart } from 'lucide-react'
-import { portfolioData, Project } from '../lib/portfolio-data'
+import { portfolioData } from '../lib/portfolio-data'
 
 export default function Projects() {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'development' | 'marketing'>('all')

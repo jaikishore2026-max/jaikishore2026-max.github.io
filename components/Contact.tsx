@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Mail, Send, Check, Loader2, Github, Twitter, MapPin } from 'lucide-react'
 import { toast } from 'sonner'
 import { portfolioData } from '../lib/portfolio-data'
@@ -48,7 +47,7 @@ export default function Contact() {
             Get In <span className="text-gradient">Touch</span>
           </h2>
           <p className="text-gray-400 font-sans max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-            Interested in scaling your community or discussing software projects? Let's build something exceptional!
+            Interested in scaling your community or discussing software projects? Let&apos;s build something exceptional!
           </p>
           <div className="w-16 h-1 bg-gradient-to-r from-accent-blue to-accent-cyan mx-auto rounded-full mt-4" />
         </div>
