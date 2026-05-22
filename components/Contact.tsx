@@ -2,6 +2,18 @@ import React, { useState } from 'react'
 import { Mail, Send, Check, Loader2, Github, Twitter, MapPin } from 'lucide-react'
 import { toast } from 'sonner'
 import { portfolioData } from '../lib/portfolio-data'
+import emailjs from '@emailjs/browser'
+
+// Read EmailJS config from environment (NEXT_PUBLIC_ prefix required for client-side access)
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || ''
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || ''
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
+
+if (typeof window !== 'undefined' && (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY)) {
+  // warn in console for developers if env vars are not set
+  // eslint-disable-next-line no-console
+  console.warn('EmailJS env vars not set: NEXT_PUBLIC_EMAILJS_SERVICE_ID/TEMPLATE_ID/PUBLIC_KEY')
+}
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
@@ -15,27 +27,38 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!formData.name || !formData.email || !formData.message) {
       toast.error('Please fill in all required fields.')
       return
     }
+
     setIsSubmitting(true)
 
-    const subject = formData.subject || `New message from ${formData.name}`
-    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    const mailto = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      to_email: portfolioData.socials.email,
+      subject: formData.subject || `New message from ${formData.name}`,
+      message: formData.message,
+    }
 
-    // Open the user's email client with a prefilled message to the contact email
-    window.location.href = mailto
+    let success = false
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
+      success = true
+      setIsSuccess(true)
+      toast.success(`Thank you, ${formData.name}! Message sent successfully.`)
 
-    setIsSubmitting(false)
-    setIsSuccess(true)
-    toast.success(`Opening your email client to send the message.`)
-
-    // Reset Form
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    setTimeout(() => setIsSuccess(false), 3000)
+      // Reset Form
+      setFormData({ name: '', email: '', subject: '', message: '' })
+    } catch (err) {
+      console.error('EmailJS error:', err)
+      toast.error('Failed to send message. Please try again later.')
+    } finally {
+      setIsSubmitting(false)
+      if (success) setTimeout(() => setIsSuccess(false), 3000)
+    }
   }
 
   return (

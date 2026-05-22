@@ -167,3 +167,26 @@ If you encounter any issues, please check:
 1. The original repository: [jaikishore2026-max.github.io](https://github.com/jaikishore2026-max/jaikishore2026-max.github.io)
 2. Next.js docs: https://nextjs.org/docs
 3. Tailwind CSS docs: https://tailwindcss.com/docs
+
+## EmailJS (Contact Form)
+
+This project includes an EmailJS-based contact form handler. To enable it:
+
+- Install the client (already added as a dependency):
+
+```bash
+pnpm install
+```
+
+- Create a local env file at the project root named `.env.local` and set the following values (do NOT commit real keys):
+
+```
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id_here
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id_here
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key_here
+```
+
+- Create an EmailJS template that uses the template variables: `from_name`, `from_email`, `subject`, `message`, and `to_email`.
+- Restart the dev server after adding env vars: `pnpm dev`.
+
+If you'd like, I can help wire the repository secrets on GitHub or create a deploy workflow that injects these values during CI.
