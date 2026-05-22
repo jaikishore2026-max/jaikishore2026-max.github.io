@@ -4,7 +4,7 @@ import styles from './F1Helmet.module.css'
 
 export default function F1Helmet() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
   const [isHovering, setIsHovering] = useState(false)
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
 
@@ -16,7 +16,7 @@ export default function F1Helmet() {
       const x = (e.clientX - rect.left) / rect.width
       const y = (e.clientY - rect.top) / rect.height
 
-      setMousePosition({ x, y })
+
 
       // Calculate tilt based on mouse position
       const tiltX = (y - 0.5) * 25 // Max 25deg tilt

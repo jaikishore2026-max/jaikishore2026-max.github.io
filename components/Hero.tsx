@@ -56,7 +56,7 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="text-lg sm:text-xl md:text-2xl text-accent-cyan font-display font-bold max-w-2xl leading-relaxed mb-4 italic"
           >
-            "{portfolioData.motivationalQuotes[currentQuoteIndex]}"
+            &quot;{portfolioData.motivationalQuotes[currentQuoteIndex]}&quot;
           </motion.p>
         </AnimatePresence>
 

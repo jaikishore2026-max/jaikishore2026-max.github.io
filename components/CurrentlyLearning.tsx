@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 import type { LucideProps } from 'lucide-react'
 import { portfolioData } from '../lib/portfolio-data'
-import type { LearningItem } from '../lib/portfolio-data'
+
 
 const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   'brain': Brain,
