@@ -14,6 +14,7 @@ export interface Project {
 export interface SkillCategory {
   title: string
   skills: { name: string; level: number; icon: string }[]
+  note?: string
 }
 
 export interface TimelineItem {
@@ -90,7 +91,7 @@ export const portfolioData: PortfolioData = {
   subTitle: "Bridging the gap between engineering foundations and viral digital growth.",
   avatarText: "JK",
   about: {
-    bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Fluxibility Softwares, I orchestrate brand presence, community scaling, and social campaigns that make software accessible. At the same time, I study software engineering fundamentals—actively coding in C++, Java, and Python to understand the inner workings of the products I market.",
+    bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Fluxibility Softwares, I orchestrate brand presence, community scale, and growth strategies.",
     age: 17,
     location: "India",
     education: "High School Graduate (CS & Business)",
@@ -104,11 +105,11 @@ export const portfolioData: PortfolioData = {
   skills: [
     {
       title: "Core Programming",
+      note: "🚀 Currently learning and improving",
       skills: [
-        { name: "Python Scripting", level: 85, icon: "terminal" },
-        { name: "C++ Programming", level: 75, icon: "code" },
-        { name: "Java Core", level: 70, icon: "coffee" },
-        { name: "HTML & CSS Essentials", level: 80, icon: "layout" }
+        { name: "Python Scripting", level: 50, icon: "terminal" },
+        { name: "C++ Programming", level: 50, icon: "code" },
+        { name: "Java Core", level: 50, icon: "coffee" }
       ]
     },
     {
@@ -123,41 +124,23 @@ export const portfolioData: PortfolioData = {
   ],
   projects: [
     {
+      id: "public-speaking-500",
+      title: "Public Speaking at 500+ PEOPLE EVENT",
+      description: "Delivered a high-impact presentation on technology and growth to a massive audience.",
+      longDescription: "Took the stage in front of 500+ attendees to share insights on the intersection of AI, marketing, and the future of tech. Focused on inspiring young developers and founders to build with a global mindset.",
+      category: "marketing",
+      tags: ["Public Speaking", "Leadership", "Communication", "Impact"],
+      metrics: "500+ Attendees reached"
+    },
+    {
       id: "fluxibility-brand",
       title: "Fluxibility Softwares Growth Campaign",
       description: "Led and executed the social media strategy resulting in massive brand reach.",
-      longDescription: "Formulated the viral outreach schedule, content marketing hooks, and visual brand assets for Fluxibility Softwares. Managed campaigns across platforms, increasing direct user engagement and setting up active communities around product launches.",
+      longDescription: "Formulated the viral outreach schedule, content marketing hooks, and visual brand assets for Fluxibility Softwares. Managed campaigns across platforms, increasing direct user engagement significantly.",
       category: "marketing",
       tags: ["Brand Strategy", "Content Creation", "Community Growth", "Analytics"],
       metrics: "150%+ growth in community engagement",
       liveUrl: "https://github.com/Fluxibility-Softwares"
-    },
-    {
-      id: "cli-rpg-cpp",
-      title: "Tactical Console RPG in C++",
-      description: "An object-oriented retro turn-based battle game written in modern C++.",
-      longDescription: "Developed a text-based, highly strategic role-playing game in C++ using object-oriented principles. Implemented custom character classes, inventory systems, random procedural enemy encounters, and binary file-saving to load game progress.",
-      category: "development",
-      tags: ["C++", "OOP", "Algorithm Design", "File I/O"],
-      githubUrl: "https://github.com/jaikishore2026-max"
-    },
-    {
-      id: "smart-automation-python",
-      title: "Social Media Asset Compiler",
-      description: "A Python automation utility that bundles, crops, and schedules media posts.",
-      longDescription: "Built a Python-based utility utilizing Pillow and schedule APIs to automate branding asset generation. The script bulk-appends company watermarks, standardizes layouts, and generates optimized hashtags based on automated topic tags.",
-      category: "development",
-      tags: ["Python", "Automation", "Pillow", "APIs"],
-      githubUrl: "https://github.com/jaikishore2026-max"
-    },
-    {
-      id: "discord-tech-helper",
-      title: "FluxBot Community Manager",
-      description: "A robust Java-based bot managing support tickets and automated posts.",
-      longDescription: "Engineered a multithreaded Discord bot in Java using JDA (Java Discord API). Integrates features like automatic spam filtering, social post syndication (Twitter/LinkedIn to Discord channels), and custom gamification levels for active community members.",
-      category: "all",
-      tags: ["Java", "Discord JDA", "JSON", "Multithreading"],
-      githubUrl: "https://github.com/jaikishore2026-max"
     }
   ],
   timeline: [
@@ -196,7 +179,7 @@ export const portfolioData: PortfolioData = {
       phase: 2,
       title: "Skill Building",
       subtitle: "The Grind",
-      description: "Web development, AI tools, Linux systems, consistent daily learning. Built projects, studied algorithms, contributed to real-world products. Turned curiosity into real technical capabilities.",
+      description: "Web development, AI tools, Linux systems, consistent daily learning. Built projects, studied algorithms, contributed to real-world products. Turned curiosity into real technical foundations.",
       year: "2024 - 2025",
       icon: "zap"
     },
@@ -297,6 +280,6 @@ export const portfolioData: PortfolioData = {
     instagram: "https://www.instagram.com/jai_kishore33",
     linkedin: "https://linkedin.com",
     twitter: "https://twitter.com",
-    email: "mailme.jaikishore2026@gmail.com"
+    email: "jaikishore@fluxibility.softwares"
   }
 }

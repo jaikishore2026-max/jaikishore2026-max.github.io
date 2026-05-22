@@ -77,7 +77,7 @@ export default function Formula1Passion() {
                     <Trophy className="w-4 h-4 text-yellow-400" />
                     <span>Excellence Mindset</span>
                   </div>
-                </motion.flex>
+                </motion.div>
               </div>
 
               {/* Right: Favorites */}

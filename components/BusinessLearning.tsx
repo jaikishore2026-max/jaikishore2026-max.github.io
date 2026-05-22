@@ -110,7 +110,7 @@ export default function BusinessLearning() {
               Founder Mentality
             </h3>
             <p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto font-light">
-              I don&apos;t just code features. I ask: <span className="text-accent-cyan font-semibold">"What problem does this solve?"</span> How does it create value? Can it scale? I think like a founder—solving problems users actually have, building products people want, and creating sustainable business models.
+              I don&apos;t just code features. I ask: <span className="text-accent-cyan font-semibold">&quot;What problem does this solve?&quot;</span> How does it create value? Can it scale? I think like a founder—solving problems users actually have, building products people want, and creating sustainable business models.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-6 text-sm text-gray-400">
               <div className="flex items-center space-x-2">

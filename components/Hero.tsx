@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, ChevronDown, Sparkles, Github, Instagram } from 'lucide-react'
+import { ArrowRight, ChevronDown, Sparkles, Github, Instagram, Linkedin, Twitter } from 'lucide-react'
 import { portfolioData } from '../lib/portfolio-data'
 
 export default function Hero() {
@@ -56,7 +56,7 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="text-lg sm:text-xl md:text-2xl text-accent-cyan font-display font-bold max-w-2xl leading-relaxed mb-4 italic"
           >
-            "{portfolioData.motivationalQuotes[currentQuoteIndex]}"
+            &quot;{portfolioData.motivationalQuotes[currentQuoteIndex]}&quot;
           </motion.p>
         </AnimatePresence>
 
@@ -113,6 +113,24 @@ export default function Hero() {
               title="Instagram"
             >
               <Instagram className="w-5 h-5 text-gray-400 hover:text-pink-400" />
+            </a>
+            <a
+              href={portfolioData.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl border border-border-glass glass hover:border-blue-400/50 hover:bg-blue-400/10 hover:scale-110 transition-all duration-300"
+              title="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5 text-gray-400 hover:text-blue-400" />
+            </a>
+            <a
+              href={portfolioData.socials.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl border border-border-glass glass hover:border-sky-400/50 hover:bg-sky-400/10 hover:scale-110 transition-all duration-300"
+              title="Twitter"
+            >
+              <Twitter className="w-5 h-5 text-gray-400 hover:text-sky-400" />
             </a>
           </div>
         </motion.div>
