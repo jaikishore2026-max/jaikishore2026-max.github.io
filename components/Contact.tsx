@@ -20,16 +20,19 @@ export default function Contact() {
       toast.error('Please fill in all required fields.')
       return
     }
-
     setIsSubmitting(true)
-    
-    // Simulate API request to server / GitHub Pages email trigger
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    
+
+    const subject = formData.subject || `New message from ${formData.name}`
+    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    const mailto = `mailto:${portfolioData.socials.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+
+    // Open the user's email client with a prefilled message to the contact email
+    window.location.href = mailto
+
     setIsSubmitting(false)
     setIsSuccess(true)
-    toast.success(`Thank you, ${formData.name}! Message sent successfully.`)
-    
+    toast.success(`Opening your email client to send the message.`)
+
     // Reset Form
     setFormData({ name: '', email: '', subject: '', message: '' })
     setTimeout(() => setIsSuccess(false), 3000)

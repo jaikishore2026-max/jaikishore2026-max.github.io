@@ -297,6 +297,6 @@ export const portfolioData: PortfolioData = {
     instagram: "https://www.instagram.com/jai_kishore33",
     linkedin: "https://linkedin.com",
     twitter: "https://twitter.com",
-    email: "jaikishore@fluxibility.softwares"
+    email: "mailme.jaikishore2026@gmail.com"
   }
 }
