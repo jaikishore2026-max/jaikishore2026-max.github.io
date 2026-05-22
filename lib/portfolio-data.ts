@@ -296,8 +296,8 @@ export const portfolioData: PortfolioData = {
   socials: {
     github: "https://github.com/jaikishore2026-max",
     instagram: "https://www.instagram.com/jai_kishore33",
-    linkedin: "https://linkedin.com",
-    twitter: "https://twitter.com",
+    linkedin: "https://www.linkedin.com/in/obuli-jai-kishore-g-v-62b98a379",
+    twitter: "https://x.com/JK80275",
     email: "jaikishore@fluxibility.softwares"
   }
 }
