@@ -1,9 +1,18 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, ChevronDown, Sparkles } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, ChevronDown, Sparkles, Github, Instagram } from 'lucide-react'
 import { portfolioData } from '../lib/portfolio-data'
 
 export default function Hero() {
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuoteIndex((prev) => (prev + 1) % portfolioData.motivationalQuotes.length)
+    }, 6000) // Change quote every 6 seconds
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
       {/* Dynamic Grid Background */}
@@ -23,50 +32,89 @@ export default function Hero() {
         >
           <Sparkles className="w-4 h-4 text-accent-cyan animate-spin duration-[4000ms]" />
           <span className="text-xs font-semibold tracking-wider text-gray-300 uppercase">
-            Marketing & Social Lead @ Fluxibility Softwares
+            Founder in Progress • Tech Builder • AI Enthusiast
           </span>
         </motion.div>
 
-        {/* Main Title */}
+        {/* Main Title - Founder Style */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl leading-tight tracking-tight text-white mb-6"
+          className="font-display font-extrabold text-4xl sm:text-6xl md:text-8xl leading-tight tracking-tight text-white mb-6"
         >
-          Hey, I&apos;m <span className="text-gradient text-glow-blue">{portfolioData.name}</span>
+          Building the <span className="text-gradient text-glow-blue">future</span> with code & vision
         </motion.h1>
+
+        {/* Rotating Motivational Quote */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={currentQuoteIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8 }}
+            className="text-lg sm:text-xl md:text-2xl text-accent-cyan font-display font-bold max-w-2xl leading-relaxed mb-4 italic"
+          >
+            "{portfolioData.motivationalQuotes[currentQuoteIndex]}"
+          </motion.p>
+        </AnimatePresence>
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-lg sm:text-xl md:text-2xl text-gray-400 font-sans font-light max-w-2xl leading-relaxed mb-10"
+          className="text-base sm:text-lg md:text-xl text-gray-400 font-sans font-light max-w-2xl leading-relaxed mb-10"
         >
-          {portfolioData.subTitle}
+          17-year-old Marketing Lead & AI-focused Developer. Speaking at 500+, building products, and learning startup thinking.
         </motion.p>
 
-        {/* Call to Actions */}
+        {/* Social Links + CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 items-center"
+          className="space-y-6 w-full"
         >
-          <a
-            href="#projects"
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-white bg-gradient-to-r from-accent-blue via-accent-indigo to-accent-cyan hover:shadow-xl hover:shadow-accent-indigo/25 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center space-x-2"
-          >
-            <span>Explore My Work</span>
-            <ArrowRight className="w-5 h-5" />
-          </a>
-          <a
-            href="#contact"
-            className="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-gray-300 border border-border-glass glass hover:border-accent-indigo/30 hover:bg-accent-indigo/5 hover:text-white transition-all duration-300 flex items-center justify-center"
-          >
-            Get In Touch
-          </a>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 items-center justify-center">
+            <a
+              href="#projects"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-white bg-gradient-to-r from-accent-blue via-accent-indigo to-accent-cyan hover:shadow-xl hover:shadow-accent-indigo/25 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center space-x-2"
+            >
+              <span>Explore My Work</span>
+              <ArrowRight className="w-5 h-5" />
+            </a>
+            <a
+              href="#contact"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-gray-300 border border-border-glass glass hover:border-accent-indigo/30 hover:bg-accent-indigo/5 hover:text-white transition-all duration-300 flex items-center justify-center"
+            >
+              Connect with Me
+            </a>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center justify-center space-x-4 pt-4">
+            <a
+              href={portfolioData.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl border border-border-glass glass hover:border-accent-cyan/50 hover:bg-accent-cyan/10 hover:scale-110 transition-all duration-300"
+              title="GitHub"
+            >
+              <Github className="w-5 h-5 text-gray-400 hover:text-accent-cyan" />
+            </a>
+            <a
+              href={portfolioData.socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl border border-border-glass glass hover:border-pink-400/50 hover:bg-pink-400/10 hover:scale-110 transition-all duration-300"
+              title="Instagram"
+            >
+              <Instagram className="w-5 h-5 text-gray-400 hover:text-pink-400" />
+            </a>
+          </div>
         </motion.div>
 
         {/* Animated Scroll Down Indicator */}

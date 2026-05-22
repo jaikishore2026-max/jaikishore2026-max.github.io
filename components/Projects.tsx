@@ -102,16 +102,16 @@ export default function Projects() {
                 </div>
 
                 {/* Actions Footer */}
-                <div className="flex items-center space-x-4 border-t border-border-glass pt-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4 border-t border-border-glass pt-6">
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors py-2"
+                      className="flex items-center justify-center space-x-2 px-4 py-2 rounded-lg bg-accent-indigo/10 border border-accent-indigo/30 text-gray-300 hover:text-white hover:bg-accent-indigo/20 hover:border-accent-indigo/60 hover:shadow-lg hover:shadow-accent-indigo/20 transition-all duration-300 font-semibold text-sm flex-1 sm:flex-initial"
                     >
                       <Github className="w-4 h-4" />
-                      <span>Codebase</span>
+                      <span>View Code</span>
                     </a>
                   )}
 
@@ -120,9 +120,9 @@ export default function Projects() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-2 text-sm font-semibold text-accent-cyan hover:text-white transition-colors py-2 ml-auto"
+                      className="flex items-center justify-center space-x-2 px-4 py-2 rounded-lg bg-accent-cyan/10 border border-accent-cyan/30 text-gray-300 hover:text-white hover:bg-accent-cyan/20 hover:border-accent-cyan/60 hover:shadow-lg hover:shadow-accent-cyan/20 transition-all duration-300 font-semibold text-sm flex-1 sm:flex-initial sm:ml-auto"
                     >
-                      <span>Explore</span>
+                      <span>Visit Live</span>
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
