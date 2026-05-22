@@ -91,7 +91,7 @@ export const portfolioData: PortfolioData = {
   subTitle: "Bridging the gap between engineering foundations and viral digital growth.",
   avatarText: "JK",
   about: {
-    bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Fluxibility Softwares, I orchestrate brand presence, community sca[...]",
+    bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Fluxibility Softwares, I orchestrate brand presence, community scale, and growth strategies.",
     age: 17,
     location: "India",
     education: "High School Graduate (CS & Business)",
@@ -107,9 +107,9 @@ export const portfolioData: PortfolioData = {
       title: "Core Programming",
       note: "🚀 Currently learning and improving",
       skills: [
-        { name: "Python Scripting", level: 40, icon: "terminal" },
-        { name: "C++ Programming", level: 42, icon: "code" },
-        { name: "Java Core", level: 38, icon: "coffee" }
+        { name: "Python Scripting", level: 50, icon: "terminal" },
+        { name: "C++ Programming", level: 50, icon: "code" },
+        { name: "Java Core", level: 50, icon: "coffee" }
       ]
     },
     {
@@ -124,41 +124,23 @@ export const portfolioData: PortfolioData = {
   ],
   projects: [
     {
+      id: "public-speaking-500",
+      title: "Public Speaking at 500+ PEOPLE EVENT",
+      description: "Delivered a high-impact presentation on technology and growth to a massive audience.",
+      longDescription: "Took the stage in front of 500+ attendees to share insights on the intersection of AI, marketing, and the future of tech. Focused on inspiring young developers and founders to build with a global mindset.",
+      category: "marketing",
+      tags: ["Public Speaking", "Leadership", "Communication", "Impact"],
+      metrics: "500+ Attendees reached"
+    },
+    {
       id: "fluxibility-brand",
       title: "Fluxibility Softwares Growth Campaign",
       description: "Led and executed the social media strategy resulting in massive brand reach.",
-      longDescription: "Formulated the viral outreach schedule, content marketing hooks, and visual brand assets for Fluxibility Softwares. Managed campaigns across platforms, increasing direct u[...]",
+      longDescription: "Formulated the viral outreach schedule, content marketing hooks, and visual brand assets for Fluxibility Softwares. Managed campaigns across platforms, increasing direct user engagement significantly.",
       category: "marketing",
       tags: ["Brand Strategy", "Content Creation", "Community Growth", "Analytics"],
       metrics: "150%+ growth in community engagement",
       liveUrl: "https://github.com/Fluxibility-Softwares"
-    },
-    {
-      id: "cli-rpg-cpp",
-      title: "Tactical Console RPG in C++",
-      description: "An object-oriented retro turn-based battle game written in modern C++.",
-      longDescription: "Developed a text-based, highly strategic role-playing game in C++ using object-oriented principles. Implemented custom character classes, inventory systems, random procedu[...]",
-      category: "development",
-      tags: ["C++", "OOP", "Algorithm Design", "File I/O"],
-      githubUrl: "https://github.com/jaikishore2026-max"
-    },
-    {
-      id: "smart-automation-python",
-      title: "Social Media Asset Compiler",
-      description: "A Python automation utility that bundles, crops, and schedules media posts.",
-      longDescription: "Built a Python-based utility utilizing Pillow and schedule APIs to automate branding asset generation. The script bulk-appends company watermarks, standardizes layouts, an[...]",
-      category: "development",
-      tags: ["Python", "Automation", "Pillow", "APIs"],
-      githubUrl: "https://github.com/jaikishore2026-max"
-    },
-    {
-      id: "discord-tech-helper",
-      title: "FluxBot Community Manager",
-      description: "A robust Java-based bot managing support tickets and automated posts.",
-      longDescription: "Engineered a multithreaded Discord bot in Java using JDA (Java Discord API). Integrates features like automatic spam filtering, social post syndication (Twitter/LinkedIn t[...]",
-      category: "all",
-      tags: ["Java", "Discord JDA", "JSON", "Multithreading"],
-      githubUrl: "https://github.com/jaikishore2026-max"
     }
   ],
   timeline: [
@@ -189,7 +171,7 @@ export const portfolioData: PortfolioData = {
       phase: 1,
       title: "Origin",
       subtitle: "The Spark",
-      description: "Curiosity in tech and self-learning. Started diving deep into programming, building small tools, experimenting with ideas. Realized the power of writing code and creating prod[...]",
+      description: "Curiosity in tech and self-learning. Started diving deep into programming, building small tools, experimenting with ideas. Realized the power of writing code and creating products.",
       year: "2023 - 2024",
       icon: "sparkles"
     },
@@ -197,7 +179,7 @@ export const portfolioData: PortfolioData = {
       phase: 2,
       title: "Skill Building",
       subtitle: "The Grind",
-      description: "Web development, AI tools, Linux systems, consistent daily learning. Built projects, studied algorithms, contributed to real-world products. Turned curiosity into real technic[...]",
+      description: "Web development, AI tools, Linux systems, consistent daily learning. Built projects, studied algorithms, contributed to real-world products. Turned curiosity into real technical foundations.",
       year: "2024 - 2025",
       icon: "zap"
     },
@@ -205,7 +187,7 @@ export const portfolioData: PortfolioData = {
       phase: 3,
       title: "Breakthrough",
       subtitle: "The Moment",
-      description: "Public speaking in front of 500+ people. Shared knowledge, built confidence, discovered leadership. This was the turning point—proof that technical skills + communication = [...]",
+      description: "Public speaking in front of 500+ people. Shared knowledge, built confidence, discovered leadership. This was the turning point—proof that technical skills + communication = impact.",
       year: "2025",
       icon: "award",
       isHighlight: true
