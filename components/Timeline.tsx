@@ -43,7 +43,7 @@ export default function Timeline() {
             My <span className="text-gradient">Founder Story</span>
           </h2>
           <p className="text-gray-400 font-sans max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-            From curiosity to execution. The journey of building, learning, and becoming a founder.
+            From curiosity to execution. The journey of building, learning, and becoming a CO-founder.
           </p>
           <div className="w-16 h-1 bg-gradient-to-r from-accent-blue to-accent-cyan mx-auto rounded-full mt-4" />
         </div>
@@ -156,7 +156,7 @@ export default function Timeline() {
           </div>
           <div className="p-6 rounded-2xl border border-border-glass glass hover:border-accent-blue/30 transition-all">
             <div className="text-2xl md:text-3xl font-display font-black text-accent-cyan mb-1">500+</div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">Speaking Audience</div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">Spoken Audience</div>
           </div>
           <div className="p-6 rounded-2xl border border-border-glass glass hover:border-accent-indigo/30 transition-all">
             <div className="text-2xl md:text-3xl font-display font-black text-accent-indigo mb-1">3y</div>

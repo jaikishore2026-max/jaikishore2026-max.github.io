@@ -67,7 +67,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-base sm:text-lg md:text-xl text-gray-400 font-sans font-light max-w-2xl leading-relaxed mb-10"
         >
-          17-year-old Marketing Lead & AI-focused Developer. Speaking at 500+, building products, and learning startup thinking.
+          17-year-old CMO(Chief Marketing Officer) At Falkon labs & AI-focused Developer,Oratory Speaker, building products.
         </motion.p>
 
         {/* Social Links + CTA */}

@@ -91,12 +91,12 @@ export const portfolioData: PortfolioData = {
   subTitle: "Bridging the gap between engineering foundations and viral digital growth.",
   avatarText: "JK",
   about: {
-    bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Fluxibility Softwares, I orchestrate brand presence, community scale, and growth strategies.",
+    bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Falkon Labs, I orchestrate brand presence, community scale, and growth strategies.",
     age: 17,
     location: "India",
-    education: "High School Graduate (CS & Business)",
+    education: "High School Graduate (CS & Business**Self-Learn**)",
     stats: [
-      { label: "Role", value: "Marketing Lead" },
+      { label: "Role", value: "CMO**Chief Markerting Officer**" },
       { label: "Core Languages", value: "Python, C++, Java" },
       { label: "Brand Scale", value: "+150% Reach" },
       { label: "Age", value: "17 Years" }
@@ -105,18 +105,18 @@ export const portfolioData: PortfolioData = {
   skills: [
     {
       title: "Core Programming",
-      note: "🚀 Currently learning and improving",
+      note: " Currently learning and improving",
       skills: [
-        { name: "Python Scripting", level: 50, icon: "terminal" },
-        { name: "C++ Programming", level: 50, icon: "code" },
-        { name: "Java Core", level: 50, icon: "coffee" }
+        { name: "Python Scripting", level: 75, icon: "terminal" },
+        { name: "C++ Programming", level: 69, icon: "code" },
+        { name: "Java Core", level: 52, icon: "coffee" }
       ]
     },
     {
       title: "Growth & Social Strategy",
       skills: [
-        { name: "Social Media Growth", level: 95, icon: "trending-up" },
-        { name: "Brand & Copywriting", level: 90, icon: "edit-3" },
+        { name: "Social Media Growth", level: 81, icon: "trending-up" },
+        { name: "Brand & Copywriting", level: 60, icon: "edit-3" },
         { name: "Community Orchestration", level: 90, icon: "users" },
         { name: "Outreach & Ads Strategy", level: 80, icon: "target" }
       ]
@@ -125,29 +125,29 @@ export const portfolioData: PortfolioData = {
   projects: [
     {
       id: "public-speaking-500",
-      title: "Public Speaking at 500+ PEOPLE EVENT",
-      description: "Delivered a high-impact presentation on technology and growth to a massive audience.",
-      longDescription: "Took the stage in front of 500+ attendees to share insights on the intersection of AI, marketing, and the future of tech. Focused on inspiring young developers and founders to build with a global mindset.",
+      title: "Public Speaking InFront Of Massive Crowd",
+      description: "Delivered a high-impact presentation",
+      longDescription: "Took the stage in front of 500+ attendees to share insight on Cultivated high-level relationships by orchestrating the formal invitation and protocol for distinguished chief guests, ensuring alignment with organizational prestige and diplomatic standards.",
       category: "marketing",
       tags: ["Public Speaking", "Leadership", "Communication", "Impact"],
       metrics: "500+ Attendees reached"
     },
     {
-      id: "fluxibility-brand",
-      title: "Fluxibility Softwares Growth Campaign",
+      id: "Falkon Labs-brand",
+      title: "Falkon Labs Growth Campaign",
       description: "Led and executed the social media strategy resulting in massive brand reach.",
-      longDescription: "Formulated the viral outreach schedule, content marketing hooks, and visual brand assets for Fluxibility Softwares. Managed campaigns across platforms, increasing direct user engagement significantly.",
+      longDescription: "Formulated the viral outreach schedule, content marketing hooks, and visual brand assets for  Softwares. Managed campaigns across platforms, increasing direct user engagement significantly.",
       category: "marketing",
       tags: ["Brand Strategy", "Content Creation", "Community Growth", "Analytics"],
       metrics: "150%+ growth in community engagement",
-      liveUrl: "https://github.com/Fluxibility-Softwares"
+      liveUrl: "Our Team Is Working on It XD"
     }
   ],
   timeline: [
     {
       year: "2026 - Present",
-      role: "Marketing & Social Media Lead",
-      company: "Fluxibility Softwares",
+      role: "CMO **Chief Markiting Officer**",
+      company: "Falkon Labs ",
       description: "Orchestrating direct digital strategy, copywriting, community scale, and graphic assets for software products.",
       category: "work"
     },
@@ -155,23 +155,17 @@ export const portfolioData: PortfolioData = {
       year: "2026",
       role: "High School Graduation",
       company: "Primary & Secondary School",
-      description: "Graduated with a strong academic focus on Computer Science, Mathematics, and Business Administration.",
+      description: "Graduated with a strong academic focus on Computer Science, Mathematics, and Business **Self Learning**.",
       category: "education"
     },
-    {
-      year: "2025",
-      role: "Freelance Technical Writer & Growth Strategist",
-      company: "Independent Client Service",
-      description: "Developed automated workflows and curated branding contents for local startups and student networks.",
-      category: "work"
-    }
+
   ],
   storyPhases: [
     {
       phase: 1,
       title: "Origin",
       subtitle: "The Spark",
-      description: "Curiosity in tech and self-learning. Started diving deep into programming, building small tools, experimenting with ideas. Realized the power of writing code and creating products.",
+      description: "Curiosity in tech,self-learning and Business . Started diving deep into programming and Learning , building small tools, experimenting with ideas. Realized the power of writing code and creating products.",
       year: "2023 - 2024",
       icon: "sparkles"
     },
@@ -179,7 +173,7 @@ export const portfolioData: PortfolioData = {
       phase: 2,
       title: "Skill Building",
       subtitle: "The Grind",
-      description: "Web development, AI tools, Linux systems, consistent daily learning. Built projects, studied algorithms, contributed to real-world products. Turned curiosity into real technical foundations.",
+      description: "Web development, AI tools, consistent daily learning. Built projects, studied algorithms, contributed to real-world products. Turned curiosity into real technical foundations.",
       year: "2024 - 2025",
       icon: "zap"
     },
@@ -187,7 +181,7 @@ export const portfolioData: PortfolioData = {
       phase: 3,
       title: "Breakthrough",
       subtitle: "The Moment",
-      description: "Public speaking in front of 500+ people. Shared knowledge, built confidence, discovered leadership. This was the turning point—proof that technical skills + communication = impact.",
+      description: "Public speaking in front of <a href=\"https://www.youtube.com/live/rYItVZPwIsA?si=PRk4DTxNq7Akj5sk&t=18464\">Mass Public</a>. Shared knowledge, built confidence, discovered leadership and Become a Leader. This was the turning point—proof that technical skills + communication = impact.",
       year: "2025",
       icon: "award",
       isHighlight: true
@@ -196,7 +190,7 @@ export const portfolioData: PortfolioData = {
       phase: 4,
       title: "Execution",
       subtitle: "The Build",
-      description: "Building personal brand, shipping projects, adopting startup mindset. Moving from learning to creating, from student to founder mentality. Ready to execute and scale.",
+      description: "Building personal brand, shipping projects, adopting startup mindset. Moving from learning to creating. Ready to execute and scale.",
       year: "2026 - Present",
       icon: "rocket"
     }
@@ -206,7 +200,7 @@ export const portfolioData: PortfolioData = {
     "Done is better than perfect. Ship and iterate.",
     "Your network is your net worth.",
     "Every expert was once a beginner who never gave up.",
-    "Build in public. Let your work speak.",
+    "Build in private. Let your work speak.",
     "Ideas are cheap, execution is expensive.",
     "The best time to start was yesterday. The second best time is now.",
     "Success is where preparation and opportunity meet.",
@@ -217,17 +211,12 @@ export const portfolioData: PortfolioData = {
       title: "AI Engineering",
       description: "Deep diving into LLMs, prompt engineering, AI integration in products, and building intelligent systems.",
       icon: "brain",
-      level: "intermediate"
+      level: "beginner"
     },
-    {
-      title: "Linux Systems",
-      description: "Mastering system administration, shell scripting, server architecture, and DevOps fundamentals.",
-      icon: "terminal",
-      level: "intermediate"
-    },
+   
     {
       title: "Startup Building",
-      description: "Understanding founders' mentality, business models, fundraising, product-market fit, and scaling strategies.",
+      description: "Understanding founder's mentality , business models, product-market fit, and scaling strategies.",
       icon: "rocket",
       level: "beginner"
     },
@@ -237,12 +226,7 @@ export const portfolioData: PortfolioData = {
       icon: "database",
       level: "beginner"
     },
-    {
-      title: "Advanced Frontend",
-      description: "Next.js, React patterns, performance optimization, and building world-class user experiences.",
-      icon: "layout",
-      level: "advanced"
-    }
+   
   ],
   businessLearning: [
     {
@@ -270,16 +254,12 @@ export const portfolioData: PortfolioData = {
       focus: "Team execution"
     }
   ],
-  f1Passion: {
-    headline: "Speed. Precision. Excellence.",
-    description: "Formula 1 represents the pinnacle of technology, strategy, and human excellence. Every decision matters. Every millisecond counts. That's how I approach building.",
-    favorites: ["Lewis Hamilton", "Max Verstappen", "Ferrari", "Mercedes", "Monaco GP"]
-  },
+  
   socials: {
     github: "https://github.com/jaikishore2026-max",
     instagram: "https://www.instagram.com/jai_kishore33",
     linkedin: "https://linkedin.com",
     twitter: "https://twitter.com",
-    email: "jaikishore@fluxibility.softwares"
+    email: "mailme.jaikishore2026@gmail.com"
   }
 }
