@@ -8,7 +8,7 @@ import Skills from '../components/Skills'
 import Projects from '../components/Projects'
 import CurrentlyLearning from '../components/CurrentlyLearning'
 import BusinessLearning from '../components/BusinessLearning'
-import Formula1Passion from '../components/Formula1Passion'
+import PassionProject from '../components/PassionProject'
 import Contact from '../components/Contact'
 import { portfolioData } from '../lib/portfolio-data'
 import { Github, Twitter, Heart, Instagram } from 'lucide-react'
@@ -46,7 +46,7 @@ export default function Home() {
           <Projects />
           <CurrentlyLearning />
           <BusinessLearning />
-          <Formula1Passion />
+          <PassionProject />
           <Contact />
         </main>
 

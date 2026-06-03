@@ -49,10 +49,11 @@ export interface BusinessLearningItem {
   focus: string
 }
 
-export interface F1PassionData {
-  headline: string
+export interface PassionProjectData {
+  title: string
   description: string
-  favorites: string[]
+  buttonText: string
+  projectUrl: string
 }
 
 export interface PortfolioData {
@@ -75,7 +76,7 @@ export interface PortfolioData {
   motivationalQuotes: string[]
   currentlyLearning: LearningItem[]
   businessLearning: BusinessLearningItem[]
-  f1Passion: F1PassionData
+  passionProject: PassionProjectData
   socials: {
     github?: string
     linkedin?: string
@@ -254,6 +255,12 @@ export const portfolioData: PortfolioData = {
       focus: "Team execution"
     }
   ],
+  passionProject: {
+    title: "Passion Projects",
+    description: "Exploring ideas that excite me—from open-source contributions to side projects that push boundaries. When I'm not building products, I'm experimenting with new technologies and sharing my learnings with the community.",
+    buttonText: "Explore Projects",
+    projectUrl: "https://github.com/jaikishore2026-max"
+  },
   
   socials: {
     github: "https://github.com/jaikishore2026-max",
