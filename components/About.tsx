@@ -34,9 +34,7 @@ export default function About() {
         {/* Grid Layout */}
         <motion.div
           variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          initial="visible"
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
         >
           {/* Left Column: Bio & Core Stats */}

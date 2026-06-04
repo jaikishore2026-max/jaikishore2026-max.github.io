@@ -60,9 +60,7 @@ export default function Skills() {
         {/* Categories Grid */}
         <motion.div
           variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          initial="visible"
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           {portfolioData.skills.map((category, catIndex) => (
@@ -99,10 +97,7 @@ export default function Skills() {
                       <div className="w-full h-2 bg-bg-deep rounded-full overflow-hidden border border-border-glass">
                         {/* Animated fill */}
                         <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.2, ease: "easeOut" as const }}
+                          initial={{ width: `${skill.level}%` }}
                           className="h-full bg-gradient-to-r from-accent-blue via-accent-indigo to-accent-cyan rounded-full"
                         />
                       </div>

@@ -33,6 +33,7 @@ export interface StoryPhase {
   year: string
   icon: string
   isHighlight?: boolean
+  youtubeLink?: string
 }
 
 export interface LearningItem {
@@ -95,9 +96,9 @@ export const portfolioData: PortfolioData = {
     bio: "A high-energy, forward-thinking 17-year-old developer and marketing strategist. As the Marketing & Social Media Lead at Falkon Labs, I orchestrate brand presence, community scale, and growth strategies.",
     age: 17,
     location: "India",
-    education: "High School Graduate (CS & Business**Self-Learn**)",
+    education: "High School Graduate (CS & Business Self-Learning)",
     stats: [
-      { label: "Role", value: "CMO**Chief Markerting Officer**" },
+      { label: "Role", value: "CMO - Chief Marketing Officer" },
       { label: "Core Languages", value: "Python, C++, Java" },
       { label: "Brand Scale", value: "+150% Reach" },
       { label: "Age", value: "17 Years" }
@@ -147,8 +148,8 @@ export const portfolioData: PortfolioData = {
   timeline: [
     {
       year: "2026 - Present",
-      role: "CMO **Chief Markiting Officer**",
-      company: "Falkon Labs ",
+      role: "CMO - Chief Marketing Officer",
+      company: "Falkon Labs",
       description: "Orchestrating direct digital strategy, copywriting, community scale, and graphic assets for software products.",
       category: "work"
     },
@@ -156,7 +157,7 @@ export const portfolioData: PortfolioData = {
       year: "2026",
       role: "High School Graduation",
       company: "Primary & Secondary School",
-      description: "Graduated with a strong academic focus on Computer Science, Mathematics, and Business **Self Learning**.",
+      description: "Graduated with a strong academic focus on Computer Science, Mathematics, and Business (Self-Learning).",
       category: "education"
     },
 
@@ -182,10 +183,11 @@ export const portfolioData: PortfolioData = {
       phase: 3,
       title: "Breakthrough",
       subtitle: "The Moment",
-      description: "Public speaking in front of <a href=\"https://www.youtube.com/live/rYItVZPwIsA?si=PRk4DTxNq7Akj5sk&t=18464\">Mass Public</a>. Shared knowledge, built confidence, discovered leadership and Become a Leader. This was the turning point—proof that technical skills + communication = impact.",
+      description: "Public speaking in front of Mass Public. Shared knowledge, built confidence, discovered leadership and Become a Leader. This was the turning point—proof that technical skills + communication = impact.",
       year: "2025",
       icon: "award",
-      isHighlight: true
+      isHighlight: true,
+      youtubeLink: "https://www.youtube.com/live/rYltVZPwlsA?si=PRk4DTXNq7Akj5sk&t=18464"
     },
     {
       phase: 4,

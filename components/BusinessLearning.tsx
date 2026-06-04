@@ -51,9 +51,7 @@ export default function BusinessLearning() {
         {/* Business Learning Grid */}
         <motion.div
           variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          initial="visible"
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           {portfolioData.businessLearning.map((item, index) => {
@@ -99,10 +97,7 @@ export default function BusinessLearning() {
 
         {/* Founder Mentality Statement */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 1, y: 0 }}
           className="mt-16 p-10 rounded-2xl border-2 border-accent-cyan/50 bg-gradient-to-r from-accent-cyan/10 to-accent-indigo/10"
         >
           <div className="text-center">

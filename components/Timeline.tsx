@@ -51,9 +51,7 @@ export default function Timeline() {
         {/* Timeline */}
         <motion.div
           variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          initial="visible"
           className="space-y-8 lg:space-y-12"
         >
           {portfolioData.storyPhases.map((phase, index) => {
@@ -70,9 +68,7 @@ export default function Timeline() {
                   {/* Timeline Point */}
                   <div className="flex flex-col items-center flex-shrink-0">
                     <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      initial={{ scale: 1 }}
                       className={`w-16 h-16 rounded-2xl flex items-center justify-center relative z-10 ${
                         isHighlight
                           ? 'bg-gradient-to-r from-accent-blue to-accent-indigo shadow-lg shadow-accent-indigo/50 border-2 border-accent-cyan'
@@ -123,6 +119,19 @@ export default function Timeline() {
                       {/* Description */}
                       <p className="text-gray-300 leading-relaxed mb-6 text-base">
                         {phase.description}
+                        {phase.youtubeLink && (
+                          <>
+                            {' '}
+                            <a
+                              href={phase.youtubeLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent-cyan hover:text-accent-blue underline transition-colors"
+                            >
+                              Watch here
+                            </a>
+                          </>
+                        )}
                       </p>
 
                       {/* Special highlight for Phase 3 */}

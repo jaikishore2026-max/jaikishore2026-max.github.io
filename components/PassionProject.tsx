@@ -24,10 +24,7 @@ export default function PassionProject() {
 
         {/* Passion Project Card */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
+          initial={{ opacity: 1, y: 0 }}
           className="relative group"
         >
           {/* Gradient Background on Hover */}
