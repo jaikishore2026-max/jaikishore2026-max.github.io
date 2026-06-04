@@ -84,9 +84,6 @@ export default function Navbar() {
                 }`}
               >
                 {link.name}
-                {activeSection === link.id && (
-                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-accent-blue to-accent-cyan rounded-full" />
-                )}
               </a>
             ))}
           </div>

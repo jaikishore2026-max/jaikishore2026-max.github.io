@@ -99,7 +99,7 @@ export default function Timeline() {
                           Phase {phase.phase}
                         </span>
                         {isHighlight && (
-                          <span className="inline-block px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-[10px] font-semibold text-amber-400 uppercase tracking-wider animate-pulse">
+                          <span className="inline-block px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-[10px] font-semibold text-amber-400 uppercase tracking-wider">
                             Milestone
                           </span>
                         )}
@@ -120,16 +120,18 @@ export default function Timeline() {
                       <p className="text-gray-300 leading-relaxed mb-6 text-base">
                         {phase.description}
                         {phase.youtubeLink && (
+                          <a
+                            href={phase.youtubeLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent-cyan hover:text-accent-blue underline transition-colors"
+                          >
+                            {phase.youtubeLinkText || "Watch here"}
+                          </a>
+                        )}
+                        {phase.youtubeLinkText && (
                           <>
-                            {' '}
-                            <a
-                              href={phase.youtubeLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-accent-cyan hover:text-accent-blue underline transition-colors"
-                            >
-                              Watch here
-                            </a>
+                            . Shared knowledge, built confidence, discovered leadership and Become a Leader. This was the turning point—proof that technical skills + communication = impact.
                           </>
                         )}
                       </p>

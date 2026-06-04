@@ -34,6 +34,7 @@ export interface StoryPhase {
   icon: string
   isHighlight?: boolean
   youtubeLink?: string
+  youtubeLinkText?: string
 }
 
 export interface LearningItem {
@@ -183,11 +184,12 @@ export const portfolioData: PortfolioData = {
       phase: 3,
       title: "Breakthrough",
       subtitle: "The Moment",
-      description: "Public speaking in front of Mass Public. Shared knowledge, built confidence, discovered leadership and Become a Leader. This was the turning point—proof that technical skills + communication = impact.",
+      description: "Public speaking in front of ",
       year: "2025",
       icon: "award",
       isHighlight: true,
-      youtubeLink: "https://www.youtube.com/live/rYltVZPwlsA?si=PRk4DTXNq7Akj5sk&t=18464"
+      youtubeLink: "https://www.youtube.com/live/rYltVZPwlsA?si=PRk4DTXNq7Akj5sk&t=18464",
+      youtubeLinkText: "Mass Public"
     },
     {
       phase: 4,
