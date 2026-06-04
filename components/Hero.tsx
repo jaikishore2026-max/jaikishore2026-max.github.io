@@ -30,7 +30,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-border-glass glass mb-8 shadow-inner shadow-white/5"
         >
-          <Sparkles className="w-4 h-4 text-accent-cyan animate-spin duration-[4000ms]" />
+          <Sparkles className="w-4 h-4 text-accent-cyan" />
           <span className="text-xs font-semibold tracking-wider text-gray-300 uppercase">
             Founder in Progress • Tech Builder • AI Enthusiast
           </span>

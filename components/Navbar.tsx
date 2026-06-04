@@ -5,34 +5,10 @@ import { portfolioData } from '../lib/portfolio-data'
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
-  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
-
-      // Section highlighters
-      const sections = ['home', 'timeline', 'about', 'skills', 'projects', 'learning', 'business', 'f1passion', 'contact']
-      const scrollPosition = window.scrollY + 100
-
-      for (const section of sections) {
-        const el = document.getElementById(section)
-        if (el) {
-          const offsetTop = el.offsetTop
-          const offsetHeight = el.offsetHeight
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
-
-      // Calculate scroll progress
-      const scrollTop = window.scrollY
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
-      setScrollProgress(progress)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -52,9 +28,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Scroll Progress Indicator */}
-      <div className="fixed top-0 left-0 h-1 bg-gradient-to-r from-accent-blue via-accent-indigo to-accent-cyan z-50 transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
-
       <nav className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
         isScrolled 
           ? 'py-4 bg-bg-deep/80 backdrop-blur-md border-b border-border-glass shadow-lg shadow-black/10' 
@@ -77,11 +50,7 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`font-sans text-sm font-medium tracking-wide transition-all duration-300 relative py-1 ${
-                  activeSection === link.id
-                    ? 'text-accent-cyan'
-                    : 'text-gray-400 hover:text-white'
-                }`}
+                className="font-sans text-sm font-medium tracking-wide text-gray-400 hover:text-white transition-colors py-1"
               >
                 {link.name}
               </a>
@@ -139,9 +108,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`font-sans text-base font-semibold tracking-wide transition-colors ${
-                  activeSection === link.id ? 'text-accent-cyan' : 'text-gray-400 hover:text-white'
-                }`}
+                className="font-sans text-base font-semibold tracking-wide text-gray-400 hover:text-white transition-colors"
               >
                 {link.name}
               </a>
