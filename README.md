@@ -4,14 +4,14 @@ A modern, responsive portfolio website built with Next.js, TypeScript, Tailwind 
 
 ## Features...
 
-- ⚡ **Fast & Optimized** - Built with Next.js 16 and optimized for performance
-- 🎨 **Beautiful UI** - Tailwind CSS and shadcn/ui components
-- 📱 **Fully Responsive** - Works great on all devices
-- 🌙 **Dark Mode** - Built-in dark mode support with next-themes
-- 🎭 **Smooth Animations** - Framer Motion animations
-- 📊 **Charts** - Recharts for data visualization
-- 🔍 **Form Validation** - React Hook Form with Zod validation
-- 📈 **Analytics** - Vercel Analytics integration
+- **Fast & Optimized** - Built with Next.js 16 and optimized for performance
+   **Beautiful UI** - Tailwind CSS and shadcn/ui components
+-  **Fully Responsive** - Works great on all devices
+-  **Dark Mode** - Built-in dark mode support with next-themes
+-  **Smooth Animations** - Framer Motion animations
+-  **Charts** - Recharts for data visualization
+-  **Form Validation** - React Hook Form with Zod validation
+-  **Analytics** - Vercel Analytics integration
 
 ## Tech Stack
 
