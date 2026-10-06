@@ -6,10 +6,10 @@ export default function Document() {
     <Html lang="en" className="dark">
       <Head>
         <meta charSet="UTF-8" />
-        <meta name="theme-color" content="#030712" />
+        <meta name="theme-color" content="#050508" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <body className="antialiased selection:bg-accent-indigo/30 selection:text-accent-cyan">
+      <body className="antialiased selection:bg-cyan selection:text-obsidian">
         <Main />
         <NextScript />
       </body>

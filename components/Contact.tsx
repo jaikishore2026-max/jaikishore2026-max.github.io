@@ -11,7 +11,6 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
 
 if (typeof window !== 'undefined' && (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY)) {
   // warn in console for developers if env vars are not set
-  // eslint-disable-next-line no-console
   console.warn('EmailJS env vars not set: NEXT_PUBLIC_EMAILJS_SERVICE_ID/TEMPLATE_ID/PUBLIC_KEY')
 }
 
