@@ -1,252 +1,54 @@
-import React, { FormEvent, ReactNode, useEffect, useState } from 'react'
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Check,
-  ChevronRight,
-  Code2,
-  Cpu,
-  Github,
-  Instagram,
-  Mail,
-  Menu,
-  Mic2,
-  MoveUpRight,
-  Network,
-  Rocket,
-  Send,
-  Sparkles,
-  Terminal,
-  TrendingUp,
-  Users,
-  X,
-  Zap,
-} from 'lucide-react'
-import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion'
+import React, { useEffect, useState } from 'react'
+import { ArrowUpRight, BriefcaseBusiness, Github, Instagram, Linkedin, Mail, MapPin, Menu, Mic2, Moon, Twitter, Volume2, VolumeX, X } from 'lucide-react'
+import { motion } from 'framer-motion'
+import CommandPalette from './CommandPalette'
+import CursorField from './CursorField'
+import InteractiveNodeCanvas from './InteractiveNodeCanvas'
+import ProofShowcase from './ProofShowcase'
+import RoiCalculator from './RoiCalculator'
 
-const navLinks = [
-  ['home', 'Home'],
-  ['story', 'Story'],
-  ['about', 'About'],
-  ['skills', 'Skills'],
-  ['projects', 'Projects'],
-  ['learning', 'Learning'],
-  ['business', 'Business'],
-  ['contact', 'Contact'],
-] as const
+const links = [['home', 'Home'], ['story', 'Story'], ['about', 'About'], ['skills', 'Skills'], ['projects', 'Projects'], ['learning', 'Learning'], ['business', 'Business'], ['contact', 'Contact']] as const
+const socials = [{ label: 'GitHub', href: 'https://github.com/jaikishore2026-max', icon: Github }, { label: 'Instagram', href: 'https://www.instagram.com/jaikishorel0_?stkn=MWV4ZHB6ajR2eTJpdw==', icon: Instagram }, { label: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin }, { label: 'Twitter', href: 'https://twitter.com', icon: Twitter }]
+const storyPhases = [{ number: '01', title: 'Origin', year: '2023 — 2024', tag: 'THE SPARK', body: 'Curiosity in tech, self-learning, and business became a daily practice. Small tools and experiments made the power of creating feel real.' }, { number: '02', title: 'Skill Building', year: '2024 — 2025', tag: 'THE GRIND', body: 'Web development, AI tools, and consistent daily learning turned curiosity into technical foundations and real-world product instincts.' }, { number: '03', title: 'Breakthrough', year: '2025', tag: 'THE MOMENT', body: 'Public speaking in front of 500+ people proved that clear communication is a force multiplier for every idea.', link: 'https://www.youtube.com/live/rYltVZPwlsA?si=PRk4DTXNq7Akj5sk&t=18464' }, { number: '04', title: 'Execution', year: '2026 — Present', tag: 'THE BUILD', body: 'Building personal brand, shipping projects, and adopting a startup mindset — moving from learning to creating and scaling.' }]
+const skillSpecs = [{ name: 'Python', type: 'PROGRAMMING', level: '75%', proof: 'AI tooling / automation' }, { name: 'C++', type: 'PROGRAMMING', level: '69%', proof: 'systems thinking' }, { name: 'Java', type: 'PROGRAMMING', level: '52%', proof: 'core foundations' }, { name: 'Social Media Growth', type: 'GROWTH', level: '81%', proof: 'community systems' }, { name: 'Brand & Copywriting', type: 'GROWTH', level: '60%', proof: 'message architecture' }, { name: 'Community Orchestration', type: 'GROWTH', level: '90%', proof: 'people / momentum' }, { name: 'Outreach & Ads Strategy', type: 'GROWTH', level: '80%', proof: 'distribution loops' }]
+const businessCards = [{ title: 'Startup Mindset', body: 'Seeing problems, building solutions, moving fast, and iterating based on market feedback.', focus: 'Problem-solving approach' }, { title: 'Product Thinking', body: 'Understanding user problems deeply, designing solutions that matter, measuring impact, and continuously improving.', focus: 'User-centric development' }, { title: 'Business Fundamentals', body: 'Revenue models, unit economics, customer acquisition, retention, and how tech businesses actually work.', focus: 'Growth & sustainability' }, { title: 'Leadership Development', body: 'Communicating vision, building teams, making decisions under uncertainty, and inspiring others to execute.', focus: 'Team execution' }]
 
-const socials = [
-  { label: 'GitHub', href: 'https://github.com/jaikishore2026-max', icon: Github },
-  { label: 'Instagram', href: 'https://www.instagram.com/jaikishorel0_?stkn=MWV4ZHB6ajR2eTJpdw==', icon: Instagram },
-]
-
-const skills = [
-  { name: 'Python', detail: 'Automation + AI tooling', level: 75, color: 'cyan', icon: Terminal },
-  { name: 'C++', detail: 'Systems thinking', level: 69, color: 'violet', icon: Code2 },
-  { name: 'Java', detail: 'Core foundations', level: 52, color: 'emerald', icon: Cpu },
-  { name: 'Web Dev', detail: 'Shipping interfaces', level: 78, color: 'cyan', icon: Network },
-  { name: 'Social Growth', detail: 'Community systems', level: 81, color: 'violet', icon: TrendingUp },
-  { name: 'Public Speaking', detail: '500+ room keynote', level: 88, color: 'emerald', icon: Mic2 },
-]
-
-const phases = [
-  { number: '01', title: 'Origin', meta: '2023 — 2024', body: 'Curiosity became a daily practice: code, business, and the first small experiments that made building feel real.', tag: 'THE SPARK', icon: Sparkles },
-  { number: '02', title: 'Skill Building', meta: '2024 — 2025', body: 'Web development, AI tools, and consistent shipping turned scattered interests into technical foundations.', tag: 'THE GRIND', icon: Zap },
-  { number: '03', title: 'Breakthrough', meta: '2025', body: 'Stepped onto a stage for 500+ people and learned that clear communication is a force multiplier for every idea.', tag: 'THE MOMENT', icon: Mic2 },
-  { number: '04', title: 'Execution', meta: '2026 — NOW', body: 'Building products, growing communities, and moving from learning in public to creating with intent.', tag: 'THE BUILD', icon: Rocket },
-]
-
-const learnings = [
-  { title: 'AI Engineering', body: 'LLMs, prompt systems, and intelligent product features.', icon: Cpu, progress: 42 },
-  { title: 'System Design', body: 'Scalable architecture, data flow, and production patterns.', icon: Network, progress: 36 },
-  { title: 'Startup Building', body: 'Founder mindset, product-market fit, and fast iteration.', icon: Rocket, progress: 48 },
-]
-
-const stats = [
-  { value: 500, suffix: '+', label: 'people in a keynote' },
-  { value: 150, suffix: '%', label: 'community reach growth' },
-  { value: 3, suffix: ' yrs', label: 'of focused building' },
-]
-
-function CountUp({ value, suffix }: { value: number; suffix: string }) {
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-    let frame = 0
-    const start = performance.now()
-    const duration = 1100
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1)
-      setCount(Math.round(value * (1 - Math.pow(1 - progress, 3))))
-      if (progress < 1) frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [value])
-  return <>{count}{suffix}</>
-}
-
-function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-function SectionHeading({ eyebrow, title, body }: { eyebrow: string; title: ReactNode; body: string }) {
-  return (
-    <div className="mb-12 max-w-2xl">
-      <div className="tech-label mb-4"><span className="pulse-dot" /> {eyebrow}</div>
-      <h2 className="display-heading text-4xl text-white sm:text-5xl">{title}</h2>
-      <p className="mt-5 max-w-xl text-base leading-7 text-zinc-400">{body}</p>
-    </div>
-  )
-}
-
-function GlassCard({ children, className = '', accent = 'cyan' }: { children: ReactNode; className?: string; accent?: 'cyan' | 'violet' | 'emerald' }) {
-  return <div className={`glass-card accent-${accent} ${className}`}>{children}</div>
-}
+function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) { return <motion.div className={className} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div> }
+function SectionHeading({ index, label, title, body }: { index: string; label: string; title: React.ReactNode; body: string }) { return <div className="new-section-heading"><div className="tech-label"><span className="pulse-dot" /> {index} / {label}</div><h2>{title}</h2><p>{body}</p></div> }
 
 export default function FuturePortfolio() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [cursor, setCursor] = useState({ x: -200, y: -200 })
-  const mouseX = useMotionValue(-200)
-  const mouseY = useMotionValue(-200)
-  const springX = useSpring(mouseX, { stiffness: 120, damping: 24 })
-  const springY = useSpring(mouseY, { stiffness: 120, damping: 24 })
-  const [formSent, setFormSent] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false); const [theme, setTheme] = useState<'obsidian' | 'aurora'>('obsidian'); const [sound, setSound] = useState(false)
+  const playTick = () => { if (!sound) return; const context = new AudioContext(); const oscillator = context.createOscillator(); const gain = context.createGain(); oscillator.frequency.value = 520; gain.gain.value = .025; oscillator.connect(gain); gain.connect(context.destination); oscillator.start(); oscillator.stop(context.currentTime + .045) }
+  useEffect(() => { document.documentElement.dataset.theme = theme; return () => { delete document.documentElement.dataset.theme } }, [theme])
+  const toggleTheme = () => setTheme(theme === 'obsidian' ? 'aurora' : 'obsidian')
 
-  useEffect(() => {
-    const move = (event: MouseEvent) => {
-      setCursor({ x: event.clientX, y: event.clientY })
-      mouseX.set(event.clientX)
-      mouseY.set(event.clientY)
-    }
-    window.addEventListener('mousemove', move)
-    return () => window.removeEventListener('mousemove', move)
-  }, [mouseX, mouseY])
+  return <div className={`site-shell premium-shell handcrafted-shell ${theme === 'aurora' ? 'theme-aurora' : ''}`} onClick={playTick}>
+    <CursorField /><div className="blueprint-grid" aria-hidden="true" /><CommandPalette theme={theme} onThemeToggle={toggleTheme} />
+    <header className="site-nav premium-nav"><a className="brand-mark" href="#home"><span>JK</span><b>JAIKISHORE <i>/ 01</i></b></a><nav className="desktop-nav" aria-label="Primary navigation">{links.map(([id, label]) => <a href={`#${id}`} key={id}>{label}</a>)}</nav><div className="nav-actions"><button className="sound-toggle" onClick={() => setSound(!sound)} aria-label={sound ? 'Turn sound off' : 'Turn sound on'}>{sound ? <Volume2 size={15} /> : <VolumeX size={15} />}</button><div className="nav-socials"><a href={socials[0].href} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={16} /></a><a href={socials[1].href} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={16} /></a></div><a href="#contact" className="nav-cta">Connect <ArrowUpRight size={15} /></a><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></div></header>
+    {menuOpen && <div className="mobile-menu">{links.map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}<ArrowUpRight size={14} /></a>)}</div>}
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const form = new FormData(event.currentTarget)
-    const subject = encodeURIComponent(String(form.get('subject') || 'Portfolio inquiry'))
-    const body = encodeURIComponent(`Hi Jaikishore,\n\nName: ${form.get('name')}\nEmail: ${form.get('email')}\n\n${form.get('message')}`)
-    setFormSent(true)
-    window.location.href = `mailto:mailme.jaikishore2026@gmail.com?subject=${subject}&body=${body}`
-  }
+    <main>
+      <section id="home" className="page-section premium-hero"><div className="hero-copy"><Reveal><div className="status-badge"><span className="status-dot" /> AMBITION IN PROGRESS</div></Reveal><Reveal delay={.08}><h1 className="display-heading hero-title">Building the <span>future</span><br />with code <i>&amp;</i> vision.</h1></Reveal><Reveal delay={.14}><p className="hero-subtitle">Jaikishore is a 17-year-old tech builder and CMO at Falkon Labs, turning technical curiosity into products, communities, and momentum.</p></Reveal><Reveal delay={.18}><p className="editorial-quote">&ldquo;The best way to predict the future is to build it.&rdquo;</p></Reveal><Reveal delay={.2} className="hero-actions"><a href="#projects" className="button button-primary">Enter the work <ArrowUpRight size={16} /></a><a href="#contact" className="button button-ghost">Start a conversation <Mail size={16} /></a></Reveal><Reveal delay={.28} className="hero-readout"><span><b>500+</b> room-scale speaker</span><span><b>+150%</b> community growth</span><span><b>03</b> years building</span></Reveal></div><Reveal delay={.16} className="hero-dashboard"><div className="dashboard-chrome"><span><i /><i /><i /></span><small>jk://command-center</small><em>LIVE <b /></em></div><div className="dashboard-content"><div className="dashboard-kicker">OPERATING PROFILE / 2026</div><strong>IDEA → SIGNAL<br /><span>→ SYSTEM → PROOF</span></strong><div className="dashboard-metrics"><div><small>ACTIVE MODE</small><b>BUILDING</b></div><div><small>BASE</small><b>INDIA / INTERNET</b></div></div><div className="dashboard-scan"><span /><span /><span /><span /><span /><span /><span /><span /></div><div className="dashboard-status"><span><i className="pulse-dot" /> all systems curious</span><small>explore the logbook <ArrowUpRight size={13} /></small></div></div></Reveal><a href="#story" className="scroll-cue"><span /> SCROLL TO EXPLORE</a></section>
 
-  return (
-    <div className="site-shell">
-      <motion.div className="cursor-orb" style={{ left: springX, top: springY }} aria-hidden="true" />
-      <div className="blueprint-grid" aria-hidden="true" />
+      <section id="story" className="page-section premium-section"><Reveal><SectionHeading index="01" label="FOUNDER STORY / LOGBOOK" title={<>Four phases. One <span>direction.</span></>} body="The moments that shaped how I think, build, and communicate — from curiosity to execution." /></Reveal><div className="story-logbook">{storyPhases.map((phase, index) => <Reveal key={phase.number} delay={index * .07} className="story-log-entry"><div className="story-log-index">{phase.number}</div><div className="story-log-main"><div><span className="story-log-tag">{phase.tag}</span><time>{phase.year}</time></div><h3>{phase.title}</h3><p>{phase.body}</p>{phase.link && <a href={phase.link} target="_blank" rel="noreferrer">Watch the keynote <ArrowUpRight size={14} /></a>}</div><span className="story-log-mark">✳</span></Reveal>)}</div><div className="story-stat-strip"><span><b>04</b> phases</span><span><b>500+</b> audience</span><span><b>03y</b> journey</span></div></section>
 
-      <header className="site-nav">
-        <a className="brand-mark" href="#home" aria-label="Jaikishore home"><span>JK</span><b>JAIKISHORE</b></a>
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          {navLinks.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
-        </nav>
-        <div className="nav-actions">
-          <div className="nav-socials">
-            {socials.map(({ label, href, icon: Icon }) => <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}><Icon size={16} /></a>)}
-          </div>
-          <a href="#contact" className="nav-cta">Connect <ArrowUpRight size={15} /></a>
-          <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button>
-        </div>
-      </header>
+      <section id="about" className="page-section premium-section about-editorial"><Reveal><SectionHeading index="02" label="PROFILE" title={<>A builder with a <span>growth loop.</span></>} body="I sit at the intersection of engineering foundations and digital growth. That means I care about the architecture, the story, and the people who use it." /></Reveal><div className="about-editorial-grid"><Reveal><div className="editorial-note"><span>NOTE / 001</span><strong>Make the next<br /><em>version real.</em></strong><p>The goal isn&apos;t to look busy. It&apos;s to keep learning, keep shipping, and make the signal clearer.</p></div></Reveal><Reveal delay={.1}><div className="identity-card"><span>JAIKISHORE G.V.</span><strong>Tech Builder<br />Marketing Lead</strong><small>High School Graduate · CS &amp; Business Self-Learning</small><div className="identity-line" /></div></Reveal></div></section>
 
-      <AnimatePresence>
-        {menuOpen && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mobile-menu">
-          {navLinks.map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}<ChevronRight size={15} /></a>)}
-        </motion.div>}
-      </AnimatePresence>
+      <section id="network" className="page-section premium-section"><Reveal><SectionHeading index="03" label="INTERACTIVE NETWORK" title={<>The way I think is a <span>connected system.</span></>} body="Drag the nodes. Zoom into the relationships. Strategy, execution, and growth only become valuable when they talk to each other." /></Reveal><Reveal delay={.1}><InteractiveNodeCanvas /></Reveal></section>
 
-      <main>
-        <section id="home" className="hero-section page-section">
-          <div className="hero-copy">
-            <Reveal><div className="status-badge"><span className="status-dot" /> FOUNDER IN PROGRESS <span className="badge-divider" /> TECH BUILDER <span className="badge-divider" /> AI ENTHUSIAST</div></Reveal>
-            <Reveal delay={0.08}><h1 className="display-heading hero-title">Building the <span>future</span><br />with code <i>&amp;</i> vision.</h1></Reveal>
-            <Reveal delay={0.14}><p className="hero-subtitle">I&apos;m Jaikishore — a 17-year-old tech builder and CMO at Falkon Labs, turning technical curiosity into products, communities, and momentum.</p></Reveal>
-            <Reveal delay={0.2} className="hero-actions">
-              <a href="#projects" className="button button-primary">Explore my work <MoveUpRight size={17} /></a>
-              <a href="mailto:mailme.jaikishore2026@gmail.com" className="button button-ghost">Start a conversation <Mail size={16} /></a>
-            </Reveal>
-            <Reveal delay={0.26} className="hero-stats">
-              {stats.map((stat) => <div className="stat-chip" key={stat.label}><strong><CountUp value={stat.value} suffix={stat.suffix} /></strong><span>{stat.label}</span></div>)}
-            </Reveal>
-          </div>
-          <Reveal className="hero-console" delay={0.18}>
-            <div className="console-top"><span><i /> <i /> <i /></span><small>jk://builder-profile</small><span className="console-live">LIVE <span className="status-dot" /></span></div>
-            <div className="console-body">
-              <div className="console-kicker">CURRENT OPERATING SYSTEM</div>
-              <div className="console-title">BUILD / LEARN /<br /><em>REPEAT</em></div>
-              <div className="console-line"><span>01</span><b>focus</b><strong>software + growth</strong></div>
-              <div className="console-line"><span>02</span><b>mode</b><strong>curious / shipping</strong></div>
-              <div className="console-line"><span>03</span><b>base</b><strong>India / internet</strong></div>
-              <div className="console-footer"><span className="wave-bars"><i /><i /><i /><i /><i /><i /><i /></span><span>system integrity: <b>100%</b></span></div>
-            </div>
-          </Reveal>
-          <a href="#story" className="scroll-cue"><span /> SCROLL TO EXPLORE</a>
-        </section>
+      <section id="skills" className="page-section premium-section"><Reveal><SectionHeading index="04" label="SKILLS / SPEC SHEET" title={<>Capability is a <span>practice.</span></>} body="Keep the numbers honest, but let the work explain what they mean. Technical foundations and growth instincts, side by side." /></Reveal><div className="skill-spec-grid">{skillSpecs.map((skill, index) => <Reveal key={skill.name} delay={index * .035}><div className="skill-spec"><span className="skill-spec-type">{skill.type}</span><strong>{skill.name}</strong><small>{skill.proof}</small><em>{skill.level}</em></div></Reveal>)}</div><div className="skill-spec-footer"><span>PYTHON / C++ / JAVA / WEB DEV / AI ENGINEERING</span><a href="#proof">Inspect code proof <ArrowUpRight size={14} /></a></div></section>
 
-        <section id="story" className="page-section section-space">
-          <Reveal><SectionHeading eyebrow="01 / THE STORY" title={<>From curiosity to <span className="gradient-text">execution.</span></>} body="A timeline of the moments that shaped how I think, build, and communicate." /></Reveal>
-          <div className="story-track">
-            {phases.map((phase, index) => { const Icon = phase.icon; return <Reveal key={phase.number} delay={index * 0.08} className="story-item">
-              <div className="story-node"><span>{phase.number}</span><Icon size={17} /></div>
-              <GlassCard className="story-card" accent={index === 2 ? 'violet' : index === 3 ? 'emerald' : 'cyan'}>
-                <div className="card-meta"><span>{phase.tag}</span><time>{phase.meta}</time></div>
-                <h3>{phase.title}</h3><p>{phase.body}</p><span className="card-corner">↗</span>
-              </GlassCard>
-            </Reveal> })}
-          </div>
-        </section>
+      <section id="proof" className="page-section premium-section"><Reveal><SectionHeading index="05" label="PROOF OVER PERCENTAGES" title={<>Don&apos;t take my word for it.<br /><span>Inspect the work.</span></>} body="Syntax, systems, and micro-case studies — the proof behind the spec sheet." /></Reveal><Reveal delay={.1}><ProofShowcase /></Reveal></section>
 
-        <section id="about" className="page-section section-space compact-top">
-          <div className="about-grid">
-            <Reveal><SectionHeading eyebrow="02 / PROFILE" title={<>A builder with a <span className="gradient-text">growth loop.</span></>} body="I sit at the intersection of engineering foundations and viral digital growth. That means I can care about the architecture, the story, and the people who use it." /></Reveal>
-            <Reveal delay={0.1}><GlassCard className="about-card" accent="violet"><div className="about-quote">&ldquo;The goal isn&apos;t to look busy. It&apos;s to make the next version real.&rdquo;</div><div className="about-signature"><span>JK</span><div><b>JAIKISHORE</b><small>TECH BUILDER / CMO / LEARNER</small></div></div></GlassCard></Reveal>
-          </div>
-        </section>
+      <section id="projects" className="page-section premium-section"><Reveal><SectionHeading index="06" label="SELECTED PROJECTS" title={<>Projects with a <span>feedback loop.</span></>} body="Technical products, growth campaigns, and room-scale communication built to make the next decision clearer." /></Reveal><div className="premium-project-grid"><Reveal className="premium-project-card project-land"><div className="project-index">PROJECT 01 <span>TECH / SYSTEMS</span></div><div className="project-radar"><div /><span>LANDSORA / LIVE</span></div><div className="premium-project-copy"><div><h3>Landsora</h3><p>IoT landslide early-warning console with deterministic validation, simulated telemetry, and explainable AI for emergency teams.</p><div className="project-tags"><span>React / TypeScript</span><span>IoT / AI</span><span>Risk systems</span></div></div><a href="https://github.com/jaikishore2026-max/landSora" target="_blank" rel="noreferrer" aria-label="Open Landsora"><Github size={19} /></a></div></Reveal><Reveal className="premium-project-card project-falkon" delay={.1}><div className="project-index">PROJECT 02 <span>GROWTH / COMMUNITY</span></div><h3>Falkon Labs Growth Campaign</h3><p>Social strategy, content hooks, visual brand assets, and community systems that created measurable momentum.</p><div className="falkon-number">+150<span>%</span></div><RoiCalculator /></Reveal></div><Reveal delay={.16}><div className="speaking-project"><div><span className="project-index">PROJECT 03 / LEADERSHIP</span><h3>Public Speaking <em>In Front Of A Massive Crowd</em></h3><p>Took the stage in front of 500+ attendees and cultivated high-level relationships by orchestrating the formal invitation and protocol for distinguished chief guests.</p></div><a href="https://www.youtube.com/live/rYltVZPwlsA?si=PRk4DTXNq7Akj5sk&t=18464" target="_blank" rel="noreferrer"><Mic2 size={17} /> Watch keynote <ArrowUpRight size={15} /></a></div></Reveal></section>
 
-        <section id="skills" className="page-section section-space">
-          <Reveal><SectionHeading eyebrow="03 / CAPABILITIES" title={<>Tools for the <span className="gradient-text">next move.</span></>} body="A growing toolkit across code, communication, and the systems that connect both." /></Reveal>
-          <div className="bento-grid skills-bento">
-            {skills.map((skill, index) => { const Icon = skill.icon; return <Reveal key={skill.name} delay={index * 0.04} className={`skill-tile tile-${skill.color}`}><Icon size={22} /><div><h3>{skill.name}</h3><p>{skill.detail}</p></div><div className="skill-meter"><span style={{ width: `${skill.level}%` }} /></div><small>{String(skill.level).padStart(2, '0')} / 100</small></Reveal> })}
-            <Reveal className="skill-summary tile-violet" delay={0.12}><div className="tech-label">BUILDING RANGE</div><strong>Code is the<br /><span>medium.</span></strong><p>Growth is the distribution layer. I&apos;m learning to design both.</p><a href="#projects">See the proof <ArrowUpRight size={15} /></a></Reveal>
-          </div>
-        </section>
+      <section id="learning" className="page-section premium-section learning-section"><Reveal><SectionHeading index="07" label="CURRENTLY LEARNING" title={<>Always in <span>beta.</span></>} body="The current learning queue: concepts I am actively turning into capability." /></Reveal><div className="learning-command-grid"><Reveal><div className="learning-cell"><span>01 / AI ENGINEERING</span><strong>Models that<br /><em>do useful work.</em></strong><p>LLMs, prompt systems, and intelligent product features.</p></div></Reveal><Reveal delay={.08}><div className="learning-cell violet-cell"><span>02 / SYSTEM DESIGN</span><strong>Architecture<br /><em>with a reason.</em></strong><p>Data flow, scalability patterns, and production thinking.</p></div></Reveal><Reveal delay={.16}><div className="learning-cell emerald-cell"><span>03 / STARTUP BUILDING</span><strong>Ship the<br /><em>next version.</em></strong><p>Founder mindset, product-market fit, and iteration.</p></div></Reveal><Reveal delay={.24}><div className="learning-cell amber-cell"><span>04 / TRADING &amp; MARKETS</span><strong>Read the<br /><em>moving signal.</em></strong><p>Learning market structure, risk management, technical analysis, and disciplined decision-making.</p></div></Reveal><Reveal delay={.32}><div className="learning-cell java-cell"><span>05 / JAVA FOUNDATIONS</span><strong>Strong core<br /><em>before scale.</em></strong><p>Building object-oriented fluency through practical console projects and game experiments.</p></div></Reveal></div></section>
 
-        <section id="projects" className="page-section section-space">
-          <Reveal><SectionHeading eyebrow="04 / SELECTED WORK" title={<>Proof over <span className="gradient-text">promises.</span></>} body="A mix of shipped experiments, technical systems, and high-energy growth work." /></Reveal>
-          <div className="projects-grid">
-            <Reveal className="project-featured" delay={0.05}><GlassCard accent="cyan"><div className="project-index">PROJECT 01 <span>2026 / SYSTEMS</span></div><div className="project-visual terrain-visual"><span className="terrain-radar" /><span className="terrain-label">LANDSORA / LIVE</span><span className="terrain-grid" /></div><div className="project-info"><div><h3>Landsora</h3><p>IoT landslide early-warning and risk monitoring console. Deterministic validation, simulated telemetry, and explainable AI for emergency teams.</p></div><a href="https://github.com/jaikishore2026-max/landSora" target="_blank" rel="noreferrer" className="round-arrow" aria-label="View Landsora on GitHub"><Github size={18} /></a></div><div className="project-tags"><span>React / TypeScript</span><span>IoT / AI</span><span>Risk systems</span></div></GlassCard></Reveal>
-            <Reveal className="project-side" delay={0.12}><GlassCard accent="violet"><div className="project-index">PROJECT 02 <span>GROWTH / COMMUNITY</span></div><div className="project-icon-large"><TrendingUp size={38} /></div><h3>Falkon Labs</h3><p>Orchestrated social strategy, content hooks, and brand systems that drove <strong>150%+ community reach growth.</strong></p><div className="project-bottom"><span className="metric-pill">+150% reach</span><BriefcaseBusiness size={18} /></div></GlassCard><GlassCard accent="emerald" className="project-mini"><div className="project-index">PROJECT 03 <span>LEADERSHIP</span></div><div className="mini-row"><Mic2 size={22} /><div><h3>500+ keynote</h3><p>Public speaking, protocol, and room-scale communication.</p></div></div></GlassCard></Reveal>
-          </div>
-        </section>
+      <section id="business" className="page-section premium-section"><Reveal><SectionHeading index="08" label="BUSINESS THINKING" title={<>Think in <span>systems.</span></>} body="Technology makes the solution possible. Product thinking makes it matter." /></Reveal><div className="business-grid">{businessCards.map((card, index) => <Reveal key={card.title} delay={index * .06}><div className="business-card"><span>0{index + 1}</span><h3>{card.title}</h3><p>{card.body}</p><small>{card.focus}</small></div></Reveal>)}</div></section>
 
-        <section id="learning" className="page-section section-space">
-          <Reveal><SectionHeading eyebrow="05 / NOW LOADING" title={<>Always in <span className="gradient-text">beta.</span></>} body="The current learning queue: concepts I am actively turning into capability." /></Reveal>
-          <div className="learning-grid">{learnings.map((item, index) => { const Icon = item.icon; return <Reveal key={item.title} delay={index * 0.08}><GlassCard className="learning-card" accent={index === 1 ? 'violet' : index === 2 ? 'emerald' : 'cyan'}><div className="learning-icon"><Icon size={22} /></div><div className="card-meta"><span>IN PROGRESS</span><span>{String(item.progress).padStart(2, '0')}%</span></div><h3>{item.title}</h3><p>{item.body}</p><div className="learning-meter"><span style={{ width: `${item.progress}%` }} /></div></GlassCard></Reveal> })}</div>
-        </section>
+      <section id="contact" className="page-section premium-section contact-section"><Reveal><div className="contact-panel premium-contact"><div className="contact-copy"><div className="tech-label"><span className="pulse-dot" /> OPEN CHANNEL</div><h2 className="display-heading">Have a bold idea?<br /><span>Let&apos;s make it real.</span></h2><p>Interested in scaling a community or discussing software projects? Let&apos;s build something exceptional.</p><a className="email-link" href="mailto:mailme.jaikishore2026@gmail.com">mailme.jaikishore2026@gmail.com <ArrowUpRight size={16} /></a><div className="contact-details"><span><MapPin size={14} /> India</span><span><BriefcaseBusiness size={14} /> CMO at Falkon Labs</span></div></div><div className="contact-actions"><a className="button button-primary" href="mailto:mailme.jaikishore2026@gmail.com">Start a conversation <Mail size={16} /></a><span>or press <kbd>⌘ K</kbd> to navigate the system</span><div className="theme-note"><Moon size={14} /> theme: {theme} <button onClick={toggleTheme}>switch</button></div></div></div></Reveal></section>
+    </main>
 
-        <section id="business" className="page-section section-space">
-          <Reveal><SectionHeading eyebrow="06 / BUSINESS MINDSET" title={<>Think in <span className="gradient-text">systems.</span></>} body="Technology makes the solution possible. Product thinking makes it matter." /></Reveal>
-          <div className="mindset-grid"><Reveal className="mindset-main"><GlassCard accent="emerald"><span className="big-index">01</span><Users size={27} /><h3>Community is a<br /><span>product surface.</span></h3><p>Trust, clarity, and momentum are designed — not left to chance.</p><div className="mindset-foot"><span>PEOPLE × PRODUCT × PURPOSE</span><ArrowUpRight size={16} /></div></GlassCard></Reveal><div className="mindset-list">{['See the problem before the feature.', 'Make the message as good as the machine.', 'Move fast. Keep the learning.'].map((text, i) => <Reveal key={text} delay={i * 0.08}><div className="mindset-row"><span>0{i + 1}</span><p>{text}</p><ChevronRight size={16} /></div></Reveal>)}</div></div>
-        </section>
-
-        <section id="contact" className="page-section section-space contact-section">
-          <Reveal><div className="contact-panel"><div className="contact-copy"><div className="tech-label"><span className="pulse-dot" /> OPEN CHANNEL</div><h2 className="display-heading">Have a bold idea?<br /><span>Let&apos;s make it real.</span></h2><p>Whether it&apos;s a product, a community, or a new problem worth solving — I&apos;m always open to the next interesting conversation.</p><a className="email-link" href="mailto:mailme.jaikishore2026@gmail.com">mailme.jaikishore2026@gmail.com <ArrowUpRight size={17} /></a></div><form className="contact-form" onSubmit={handleSubmit}><label>Name<input required name="name" placeholder="Your name" /></label><label>Email<input required type="email" name="email" placeholder="you@example.com" /></label><label>Subject<input name="subject" placeholder="What are we building?" /></label><label>Message<textarea required name="message" rows={4} placeholder="Tell me a little about it..." /></label><button className="button button-primary" type="submit">{formSent ? <>Opening mail <Check size={16} /></> : <>Send a message <Send size={16} /></>}</button></form></div></Reveal>
-        </section>
-      </main>
-
-      <footer className="site-footer"><div><a className="brand-mark" href="#home"><span>JK</span><b>JAIKISHORE</b></a><p>Building the future with code &amp; vision.</p></div><div className="footer-links">{socials.map(({ label, href, icon: Icon }) => <a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={16} /> {label}</a>)}<a href="mailto:mailme.jaikishore2026@gmail.com"><Mail size={16} /> Email</a></div><small>© {new Date().getFullYear()} JAIKISHORE / ALL SYSTEMS BUILDING</small></footer>
-      <div className="cursor-coordinates" aria-hidden="true">X {String(Math.round(cursor.x)).padStart(4, '0')} / Y {String(Math.round(cursor.y)).padStart(4, '0')}</div>
-    </div>
-  )
+    <footer className="site-footer premium-footer"><div><a className="brand-mark" href="#home"><span>JK</span><b>JAIKISHORE <i>/ 01</i></b></a><p>Building the future with code &amp; vision.</p></div><div className="footer-links">{socials.map(({ label, href, icon: Icon }) => <a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={15} /> {label}</a>)}<a href="mailto:mailme.jaikishore2026@gmail.com"><Mail size={15} /> Email</a></div><small>© {new Date().getFullYear()} JAIKISHORE / ALL SYSTEMS BUILDING</small></footer>
+  </div>
 }
