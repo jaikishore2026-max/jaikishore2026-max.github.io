@@ -37,7 +37,7 @@ const navLinks = [
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/jaikishore2026-max', icon: Github },
-  { label: 'Instagram', href: 'https://www.instagram.com/jai_kishore33', icon: Instagram },
+  { label: 'Instagram', href: 'https://www.instagram.com/jaikishorel0_?stkn=MWV4ZHB6ajR2eTJpdw==', icon: Instagram },
 ]
 
 const skills = [
