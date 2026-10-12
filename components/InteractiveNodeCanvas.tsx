@@ -19,26 +19,46 @@ export default function InteractiveNodeCanvas() {
   const [scale, setScale] = useState(1)
   const [dragging, setDragging] = useState<string | null>(null)
   const [selected, setSelected] = useState('growth')
+  const [compact, setCompact] = useState(false)
   const frameRef = useRef<HTMLDivElement>(null)
 
-  const moveNode = (event: React.PointerEvent, id: string) => {
+  React.useEffect(() => {
+    const query = window.matchMedia('(max-width: 680px)')
+    const updateLayout = () => setCompact(query.matches)
+    updateLayout()
+    query.addEventListener('change', updateLayout)
+    return () => query.removeEventListener('change', updateLayout)
+  }, [])
+
+  const moveNode = (event: React.PointerEvent<HTMLButtonElement>, id: string) => {
     if (!frameRef.current) return
     const rect = frameRef.current.getBoundingClientRect()
-    const x = Math.max(2, Math.min(88, ((event.clientX - rect.left) / rect.width) * 100))
-    const y = Math.max(8, Math.min(82, ((event.clientY - rect.top) / rect.height) * 100))
+    const nodeWidth = event.currentTarget.offsetWidth * scale
+    const nodeHeight = event.currentTarget.offsetHeight * scale
+    const positionX = ((event.clientX - rect.left) / rect.width) * 100
+    const minX = (nodeWidth * .1 / rect.width) * 100
+    const maxX = 100 - (nodeWidth * .9 / rect.width) * 100
+    const clampedX = Math.max(minX, Math.min(maxX, positionX))
+    const x = compact
+      ? Math.max(0, Math.min(100, (clampedX - 22) / .56))
+      : clampedX
+    const y = Math.max((nodeHeight / rect.height) * 50, Math.min(100 - (nodeHeight / rect.height) * 50, ((event.clientY - rect.top) / rect.height) * 100))
     setNodes((current) => current.map((node) => node.id === id ? { ...node, x, y } : node))
   }
 
   const nodeById = (id: string) => nodes.find((node) => node.id === id) || initialNodes[0]
+  const displayedNodes = compact
+    ? nodes.map((node) => ({ ...node, x: 22 + node.x * .56 }))
+    : nodes
 
   return <div className="node-canvas-shell">
     <div className="node-toolbar"><span><i className="pulse-dot" /> INTERACTIVE SYSTEM MAP</span><div><button onClick={() => setScale((value) => Math.min(value + .12, 1.6))} aria-label="Zoom in"><Plus size={14} /></button><button onClick={() => setScale((value) => Math.max(value - .12, .7))} aria-label="Zoom out"><Minus size={14} /></button><button onClick={() => { setScale(1); setNodes(initialNodes) }} aria-label="Reset canvas"><RotateCcw size={14} /></button><button onClick={() => setScale(1.22)} aria-label="Focus canvas"><Maximize2 size={14} /></button></div></div>
     <div className="node-canvas" ref={frameRef} style={{ '--canvas-scale': scale } as React.CSSProperties}>
       <div className="node-crosshair crosshair-one" /><div className="node-crosshair crosshair-two" />
-      {edges.map(([from, to]) => { const source = nodeById(from); const target = nodeById(to); return <svg className="node-edge" key={`${from}-${to}`}><line x1={`${source.x}%`} y1={`${source.y}%`} x2={`${target.x}%`} y2={`${target.y}%`} /></svg> })}
-      {nodes.map((node) => <button key={node.id} className={`network-node node-${node.tone} ${selected === node.id ? 'is-selected' : ''}`} style={{ left: `${node.x}%`, top: `${node.y}%` }} onClick={() => setSelected(node.id)} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); setDragging(node.id) }} onPointerMove={(event) => dragging === node.id && moveNode(event, node.id)} onPointerUp={() => setDragging(null)}><span className="node-port" /><small>{node.type}</small><b>{node.label}</b><em>{node.metric}</em></button>)}
+      {edges.map(([from, to]) => { const source = displayedNodes.find((node) => node.id === from) || displayedNodes[0]; const target = displayedNodes.find((node) => node.id === to) || displayedNodes[0]; return <svg className="node-edge" key={`${from}-${to}`}><line x1={`${source.x}%`} y1={`${source.y}%`} x2={`${target.x}%`} y2={`${target.y}%`} /></svg> })}
+      {displayedNodes.map((node) => <button key={node.id} className={`network-node node-${node.tone} ${selected === node.id ? 'is-selected' : ''}`} style={{ left: `${node.x}%`, top: `${node.y}%` }} onClick={() => setSelected(node.id)} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); setDragging(node.id) }} onPointerMove={(event) => dragging === node.id && moveNode(event, node.id)} onPointerUp={() => setDragging(null)} onPointerCancel={() => setDragging(null)}><span className="node-port" /><small>{node.type}</small><b>{node.label}</b><em>{node.metric}</em></button>)}
       <div className="node-hint">DRAG NODES <span>•</span> CLICK TO INSPECT <span>•</span> SCROLL TO DISCOVER</div>
     </div>
-    <div className="node-inspector"><span className={`inspector-dot node-${nodeById(selected).tone}`} /><div><small>SELECTED NODE / {nodeById(selected).type}</small><strong>{nodeById(selected).label}</strong></div><em>{nodeById(selected).metric}</em></div>
+    <div className="node-inspector" role="status" aria-live="polite"><span className={`inspector-dot node-${nodeById(selected).tone}`} /><div><small>SELECTED NODE / {nodeById(selected).type}</small><strong>{nodeById(selected).label}</strong></div><em>{nodeById(selected).metric}</em></div>
   </div>
 }

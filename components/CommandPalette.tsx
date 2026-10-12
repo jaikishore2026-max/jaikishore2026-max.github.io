@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowUpRight, Command, Moon, Search, Sun, Terminal, X, Zap } from 'lucide-react'
 
 export type PaletteAction = { id: string; label: string; detail: string; icon: React.ElementType; run: () => void }
@@ -9,6 +9,9 @@ export default function CommandPalette({ onThemeToggle, theme }: CommandPaletteP
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [active, setActive] = useState(0)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   const actions = useMemo<PaletteAction[]>(() => [
     { id: 'home', label: 'Go to home', detail: 'Jump to the command center', icon: Terminal, run: () => document.querySelector('#home')?.scrollIntoView({ behavior: 'smooth' }) },
@@ -32,6 +35,34 @@ export default function CommandPalette({ onThemeToggle, theme }: CommandPaletteP
 
   useEffect(() => {
     if (!open) return
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    searchRef.current?.focus()
+    const onTab = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab' || !dialogRef.current) return
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled])')
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (!first || !last) return
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onTab)
+    return () => {
+      document.removeEventListener('keydown', onTab)
+      document.body.style.overflow = previousOverflow
+      previousFocus?.focus()
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'ArrowDown') { event.preventDefault(); setActive((value) => Math.min(value + 1, Math.max(filtered.length - 1, 0))) }
       if (event.key === 'ArrowUp') { event.preventDefault(); setActive((value) => Math.max(value - 1, 0)) }
@@ -42,10 +73,10 @@ export default function CommandPalette({ onThemeToggle, theme }: CommandPaletteP
   }, [active, filtered, open])
 
   return <>
-    <button className="palette-trigger" onClick={() => setOpen(true)} aria-label="Open command palette"><Search size={14} /><span>Search</span><kbd>⌘ K</kbd></button>
-    {open && <div className="palette-backdrop" role="dialog" aria-modal="true" aria-label="Command palette" onMouseDown={() => setOpen(false)}>
-      <div className="command-palette" onMouseDown={(event) => event.stopPropagation()}>
-        <div className="palette-search"><Search size={18} /><input autoFocus value={query} onChange={(event) => { setQuery(event.target.value); setActive(0) }} placeholder="Search the interface..." /><button onClick={() => setOpen(false)} aria-label="Close command palette"><X size={17} /></button></div>
+    <button ref={triggerRef} className="palette-trigger" onClick={() => setOpen(true)} aria-label="Open command palette" aria-haspopup="dialog" aria-expanded={open} aria-controls="command-palette"><Search size={14} /><span>Search</span><kbd>⌘ K</kbd></button>
+    {open && <div className="palette-backdrop" onMouseDown={() => setOpen(false)}>
+      <div id="command-palette" ref={dialogRef} className="command-palette" role="dialog" aria-modal="true" aria-label="Command palette" onMouseDown={(event) => event.stopPropagation()}>
+        <div className="palette-search"><Search size={18} /><input ref={searchRef} value={query} onChange={(event) => { setQuery(event.target.value); setActive(0) }} placeholder="Search the interface..." aria-label="Search portfolio commands" /><button onClick={() => setOpen(false)} aria-label="Close command palette"><X size={17} /></button></div>
         <div className="palette-list">{filtered.length ? filtered.map((action, index) => { const Icon = action.icon; return <button key={action.id} className={`palette-item ${active === index ? 'is-active' : ''}`} onMouseEnter={() => setActive(index)} onClick={() => { action.run(); setOpen(false) }}><Icon size={16} /><span><b>{action.label}</b><small>{action.detail}</small></span><ArrowUpRight size={14} /></button> }) : <div className="palette-empty">No command matches that query.</div>}</div>
         <div className="palette-footer"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>esc</kbd> close</span></div>
       </div>

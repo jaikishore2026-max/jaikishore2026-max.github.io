@@ -1,31 +1,76 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, BriefcaseBusiness, Github, Instagram, Linkedin, Mail, MapPin, Menu, Mic2, Moon, Twitter, Volume2, VolumeX, X } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { toast } from 'sonner'
 import CommandPalette from './CommandPalette'
 import CursorField from './CursorField'
 import InteractiveNodeCanvas from './InteractiveNodeCanvas'
 import ProofShowcase from './ProofShowcase'
 import RoiCalculator from './RoiCalculator'
 
-const links = [['home', 'Home'], ['story', 'Story'], ['about', 'About'], ['skills', 'Skills'], ['projects', 'Projects'], ['learning', 'Learning'], ['business', 'Business'], ['contact', 'Contact']] as const
+const links = [['home', 'Home'], ['story', 'Story'], ['about', 'About'], ['network', 'Network'], ['skills', 'Skills'], ['proof', 'Proof'], ['projects', 'Projects'], ['learning', 'Learning'], ['business', 'Business'], ['contact', 'Contact']] as const
 const socials = [{ label: 'GitHub', href: 'https://github.com/jaikishore2026-max', icon: Github }, { label: 'Instagram', href: 'https://www.instagram.com/jaikishorel0_?stkn=MWV4ZHB6ajR2eTJpdw==', icon: Instagram }, { label: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin }, { label: 'Twitter', href: 'https://twitter.com', icon: Twitter }]
 const storyPhases = [{ number: '01', title: 'Origin', year: '2023 — 2024', tag: 'THE SPARK', body: 'Curiosity in tech, self-learning, and business became a daily practice. Small tools and experiments made the power of creating feel real.' }, { number: '02', title: 'Skill Building', year: '2024 — 2025', tag: 'THE GRIND', body: 'Web development, AI tools, and consistent daily learning turned curiosity into technical foundations and real-world product instincts.' }, { number: '03', title: 'Breakthrough', year: '2025', tag: 'THE MOMENT', body: 'Public speaking in front of 500+ people proved that clear communication is a force multiplier for every idea.', link: 'https://www.youtube.com/live/rYltVZPwlsA?si=PRk4DTXNq7Akj5sk&t=18464' }, { number: '04', title: 'Execution', year: '2026 — Present', tag: 'THE BUILD', body: 'Building personal brand, shipping projects, and adopting a startup mindset — moving from learning to creating and scaling.' }]
 const skillSpecs = [{ name: 'Python', type: 'PROGRAMMING', level: '75%', proof: 'AI tooling / automation' }, { name: 'C++', type: 'PROGRAMMING', level: '69%', proof: 'systems thinking' }, { name: 'Java', type: 'PROGRAMMING', level: '52%', proof: 'core foundations' }, { name: 'Social Media Growth', type: 'GROWTH', level: '81%', proof: 'community systems' }, { name: 'Brand & Copywriting', type: 'GROWTH', level: '60%', proof: 'message architecture' }, { name: 'Community Orchestration', type: 'GROWTH', level: '90%', proof: 'people / momentum' }, { name: 'Outreach & Ads Strategy', type: 'GROWTH', level: '80%', proof: 'distribution loops' }]
 const businessCards = [{ title: 'Startup Mindset', body: 'Seeing problems, building solutions, moving fast, and iterating based on market feedback.', focus: 'Problem-solving approach' }, { title: 'Product Thinking', body: 'Understanding user problems deeply, designing solutions that matter, measuring impact, and continuously improving.', focus: 'User-centric development' }, { title: 'Business Fundamentals', body: 'Revenue models, unit economics, customer acquisition, retention, and how tech businesses actually work.', focus: 'Growth & sustainability' }, { title: 'Leadership Development', body: 'Communicating vision, building teams, making decisions under uncertainty, and inspiring others to execute.', focus: 'Team execution' }]
 
-function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) { return <motion.div className={className} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div> }
+function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) { const reduceMotion = useReducedMotion(); return <motion.div className={className} initial={reduceMotion ? false : { opacity: 0, y: 22 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: .16 }} transition={{ duration: .65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div> }
 function SectionHeading({ index, label, title, body }: { index: string; label: string; title: React.ReactNode; body: string }) { return <div className="new-section-heading"><div className="tech-label"><span className="pulse-dot" /> {index} / {label}</div><h2>{title}</h2><p>{body}</p></div> }
 
 export default function FuturePortfolio() {
   const [menuOpen, setMenuOpen] = useState(false); const [theme, setTheme] = useState<'obsidian' | 'aurora'>('obsidian'); const [sound, setSound] = useState(false)
-  const playTick = () => { if (!sound) return; const context = new AudioContext(); const oscillator = context.createOscillator(); const gain = context.createGain(); oscillator.frequency.value = 520; gain.gain.value = .025; oscillator.connect(gain); gain.connect(context.destination); oscillator.start(); oscillator.stop(context.currentTime + .045) }
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const mobileMenuRef = useRef<HTMLElement>(null)
+  const audioContextRef = useRef<AudioContext | null>(null)
+  const playTick = () => {
+    if (!sound) return
+    try {
+      const AudioContextConstructor = window.AudioContext
+      if (!AudioContextConstructor) throw new Error('Audio is not supported by this browser.')
+      const context = audioContextRef.current ?? new AudioContextConstructor()
+      audioContextRef.current = context
+      const oscillator = context.createOscillator()
+      const gain = context.createGain()
+      oscillator.frequency.value = 520
+      gain.gain.value = .025
+      oscillator.connect(gain)
+      gain.connect(context.destination)
+      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect() }
+      oscillator.start()
+      oscillator.stop(context.currentTime + .045)
+    } catch (error) {
+      console.error('Unable to play the interface sound:', error)
+      setSound(false)
+      toast.error('Interface sound is unavailable in this browser.')
+    }
+  }
   useEffect(() => { document.documentElement.dataset.theme = theme; return () => { delete document.documentElement.dataset.theme } }, [theme])
+  useEffect(() => {
+    if (!menuOpen) return
+    mobileMenuRef.current?.querySelector<HTMLAnchorElement>('a')?.focus()
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+    const desktop = window.matchMedia('(min-width: 981px)')
+    const onDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    desktop.addEventListener('change', onDesktop)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      desktop.removeEventListener('change', onDesktop)
+    }
+  }, [menuOpen])
   const toggleTheme = () => setTheme(theme === 'obsidian' ? 'aurora' : 'obsidian')
 
   return <div className={`site-shell premium-shell handcrafted-shell ${theme === 'aurora' ? 'theme-aurora' : ''}`} onClick={playTick}>
     <CursorField /><div className="blueprint-grid" aria-hidden="true" /><CommandPalette theme={theme} onThemeToggle={toggleTheme} />
-    <header className="site-nav premium-nav"><a className="brand-mark" href="#home"><span>JK</span><b>JAIKISHORE <i>/ 01</i></b></a><nav className="desktop-nav" aria-label="Primary navigation">{links.map(([id, label]) => <a href={`#${id}`} key={id}>{label}</a>)}</nav><div className="nav-actions"><button className="sound-toggle" onClick={() => setSound(!sound)} aria-label={sound ? 'Turn sound off' : 'Turn sound on'}>{sound ? <Volume2 size={15} /> : <VolumeX size={15} />}</button><div className="nav-socials"><a href={socials[0].href} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={16} /></a><a href={socials[1].href} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={16} /></a></div><a href="#contact" className="nav-cta">Connect <ArrowUpRight size={15} /></a><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button></div></header>
-    {menuOpen && <div className="mobile-menu">{links.map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}<ArrowUpRight size={14} /></a>)}</div>}
+    <header className="site-nav premium-nav"><a className="brand-mark" href="#home" aria-label="Jaikishore — home"><span>JK</span><b>JAIKISHORE <i>/ 01</i></b></a><nav className="desktop-nav" aria-label="Primary navigation">{links.map(([id, label]) => <a href={`#${id}`} key={id}>{label}</a>)}</nav><div className="nav-actions"><button className="sound-toggle" onClick={() => setSound(!sound)} aria-label={sound ? 'Turn sound off' : 'Turn sound on'} aria-pressed={sound}>{sound ? <Volume2 size={15} /> : <VolumeX size={15} />}</button><div className="nav-socials"><a href={socials[0].href} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={16} /></a><a href={socials[1].href} target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={16} /></a></div><a href="#contact" className="nav-cta">Connect <ArrowUpRight size={15} /></a><button ref={menuButtonRef} className="menu-button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={menuOpen} aria-controls="mobile-navigation">{menuOpen ? <X /> : <Menu />}</button></div></header>
+    <nav ref={mobileMenuRef} id="mobile-navigation" className="mobile-menu" aria-label="Mobile navigation" hidden={!menuOpen}>{links.map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}<ArrowUpRight size={14} /></a>)}</nav>
 
     <main>
       <section id="home" className="page-section premium-hero"><div className="hero-copy"><Reveal><div className="status-badge"><span className="status-dot" /> AMBITION IN PROGRESS</div></Reveal><Reveal delay={.08}><h1 className="display-heading hero-title">Building the <span>future</span><br />with code <i>&amp;</i> vision.</h1></Reveal><Reveal delay={.14}><p className="hero-subtitle">Jaikishore is a 17-year-old tech builder and CMO at Falkon Labs, turning technical curiosity into products, communities, and momentum.</p></Reveal><Reveal delay={.18}><p className="editorial-quote">&ldquo;The best way to predict the future is to build it.&rdquo;</p></Reveal><Reveal delay={.2} className="hero-actions"><a href="#projects" className="button button-primary">Enter the work <ArrowUpRight size={16} /></a><a href="#contact" className="button button-ghost">Start a conversation <Mail size={16} /></a></Reveal><Reveal delay={.28} className="hero-readout"><span><b>500+</b> room-scale speaker</span><span><b>+150%</b> community growth</span><span><b>03</b> years building</span></Reveal></div><Reveal delay={.16} className="hero-dashboard"><div className="dashboard-chrome"><span><i /><i /><i /></span><small>jk://command-center</small><em>LIVE <b /></em></div><div className="dashboard-content"><div className="dashboard-kicker">OPERATING PROFILE / 2026</div><strong>IDEA → SIGNAL<br /><span>→ SYSTEM → PROOF</span></strong><div className="dashboard-metrics"><div><small>ACTIVE MODE</small><b>BUILDING</b></div><div><small>BASE</small><b>INDIA / INTERNET</b></div></div><div className="dashboard-scan"><span /><span /><span /><span /><span /><span /><span /><span /></div><div className="dashboard-status"><span><i className="pulse-dot" /> all systems curious</span><small>explore the logbook <ArrowUpRight size={13} /></small></div></div></Reveal><a href="#story" className="scroll-cue"><span /> SCROLL TO EXPLORE</a></section>
@@ -46,7 +91,7 @@ export default function FuturePortfolio() {
 
       <section id="business" className="page-section premium-section"><Reveal><SectionHeading index="08" label="BUSINESS THINKING" title={<>Think in <span>systems.</span></>} body="Technology makes the solution possible. Product thinking makes it matter." /></Reveal><div className="business-grid">{businessCards.map((card, index) => <Reveal key={card.title} delay={index * .06}><div className="business-card"><span>0{index + 1}</span><h3>{card.title}</h3><p>{card.body}</p><small>{card.focus}</small></div></Reveal>)}</div></section>
 
-      <section id="contact" className="page-section premium-section contact-section"><Reveal><div className="contact-panel premium-contact"><div className="contact-copy"><div className="tech-label"><span className="pulse-dot" /> OPEN CHANNEL</div><h2 className="display-heading">Have a bold idea?<br /><span>Let&apos;s make it real.</span></h2><p>Interested in scaling a community or discussing software projects? Let&apos;s build something exceptional.</p><a className="email-link" href="mailto:mailme.jaikishore2026@gmail.com">mailme.jaikishore2026@gmail.com <ArrowUpRight size={16} /></a><div className="contact-details"><span><MapPin size={14} /> India</span><span><BriefcaseBusiness size={14} /> CMO at Falkon Labs</span></div></div><div className="contact-actions"><a className="button button-primary" href="mailto:mailme.jaikishore2026@gmail.com">Start a conversation <Mail size={16} /></a><span>or press <kbd>⌘ K</kbd> to navigate the system</span><div className="theme-note"><Moon size={14} /> theme: {theme} <button onClick={toggleTheme}>switch</button></div></div></div></Reveal></section>
+        <section id="contact" className="page-section premium-section contact-section"><Reveal><div className="contact-panel premium-contact"><div className="contact-copy"><div className="tech-label"><span className="pulse-dot" /> OPEN CHANNEL</div><h2 className="display-heading">Have a bold idea?<br /><span>Let&apos;s make it real.</span></h2><p>Interested in scaling a community or discussing software projects? Let&apos;s build something exceptional.</p><a className="email-link" href="mailto:mailme.jaikishore2026@gmail.com">mailme.jaikishore2026@gmail.com <ArrowUpRight size={16} /></a><div className="contact-details"><span><MapPin size={14} /> India</span><span><BriefcaseBusiness size={14} /> CMO at Falkon Labs</span></div></div><div className="contact-actions"><a className="button button-primary" href="mailto:mailme.jaikishore2026@gmail.com">Start a conversation <Mail size={16} /></a><span>or press <kbd>⌘ K</kbd> to navigate the system</span><div className="theme-note"><Moon size={14} /> theme: {theme} <button onClick={toggleTheme} aria-label="Switch color theme" aria-pressed={theme === 'aurora'}>switch</button></div></div></div></Reveal></section>
     </main>
 
     <footer className="site-footer premium-footer"><div><a className="brand-mark" href="#home"><span>JK</span><b>JAIKISHORE <i>/ 01</i></b></a><p>Building the future with code &amp; vision.</p></div><div className="footer-links">{socials.map(({ label, href, icon: Icon }) => <a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={15} /> {label}</a>)}<a href="mailto:mailme.jaikishore2026@gmail.com"><Mail size={15} /> Email</a></div><small>© {new Date().getFullYear()} JAIKISHORE / ALL SYSTEMS BUILDING</small></footer>

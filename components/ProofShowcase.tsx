@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Code2, Copy, Mic2, TrendingUp } from 'lucide-react'
+import { toast } from 'sonner'
 
 const proofs = [
   { id: 'python', label: 'Python / AI', icon: Code2, title: 'Build systems that explain themselves.', metric: 'automation + intelligence', code: <><span className="code-key">def</span> <span className="code-fn">explain_signal</span>(signal):<br />&nbsp;&nbsp;<span className="code-key">return</span> {`{`}<br />&nbsp;&nbsp;&nbsp;&nbsp;<span className="code-string">&quot;signal&quot;</span>: signal,<br />&nbsp;&nbsp;&nbsp;&nbsp;<span className="code-string">&quot;confidence&quot;</span>: <span className="code-number">0.94</span>,<br />&nbsp;&nbsp;&nbsp;&nbsp;<span className="code-string">&quot;next_action&quot;</span>: <span className="code-string">&quot;measure again&quot;</span><br />&nbsp;&nbsp;{`}`}</>, detail: 'From sensor telemetry to explainable risk layers in Landsora.' },
@@ -11,7 +12,20 @@ const proofs = [
 export default function ProofShowcase() {
   const [active, setActive] = useState('python')
   const [copied, setCopied] = useState(false)
+  const codeRef = useRef<HTMLElement>(null)
   const proof = proofs.find((item) => item.id === active) || proofs[0]
   const Icon = proof.icon
-  return <div className="proof-showcase"><div className="proof-tabs">{proofs.map((item) => { const TabIcon = item.icon; return <button key={item.id} className={active === item.id ? 'is-active' : ''} onClick={() => setActive(item.id)}><TabIcon size={15} /> {item.label}</button> })}</div><div className="proof-grid"><div className="proof-copy"><div className="proof-icon"><Icon size={21} /></div><span className="tech-label">{proof.metric}</span><h3>{proof.title}</h3><p>{proof.detail}</p><div className="proof-stamp"><span className="pulse-dot" /> PROOF LOG / VERIFIED BY SHIPPING</div></div><div className="code-window"><div className="code-top"><span><i /><i /><i /></span><button onClick={() => { setCopied(true); setTimeout(() => setCopied(false), 1200) }}><Copy size={13} /> {copied ? 'COPIED' : 'COPY'}</button></div><pre><code>{proof.code}</code></pre></div></div></div>
+  const copyCode = async () => {
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard access is unavailable.')
+      await navigator.clipboard.writeText(codeRef.current?.innerText ?? '')
+      setCopied(true)
+      toast.success('Code copied to clipboard.')
+      window.setTimeout(() => setCopied(false), 1600)
+    } catch (error) {
+      console.error('Unable to copy the code sample:', error)
+      toast.error('Could not copy the code. Check clipboard permissions and try again.')
+    }
+  }
+  return <div className="proof-showcase"><div className="proof-tabs">{proofs.map((item) => { const TabIcon = item.icon; return <button key={item.id} className={active === item.id ? 'is-active' : ''} onClick={() => { setActive(item.id); setCopied(false) }} aria-pressed={active === item.id}><TabIcon size={15} /> {item.label}</button> })}</div><div className="proof-grid"><div className="proof-copy"><div className="proof-icon"><Icon size={21} /></div><span className="tech-label">{proof.metric}</span><h3>{proof.title}</h3><p>{proof.detail}</p><div className="proof-stamp"><span className="pulse-dot" /> PROOF LOG / VERIFIED BY SHIPPING</div></div><div className="code-window"><div className="code-top"><span><i /><i /><i /></span><button onClick={copyCode} aria-label="Copy code sample"><Copy size={13} /> {copied ? 'COPIED' : 'COPY'}</button></div><pre><code ref={codeRef}>{proof.code}</code></pre></div></div></div>
 }

@@ -1,9 +1,12 @@
 self.__BUILD_MANIFEST = {
   "/": [
-    "static/chunks/0o.dmi_oxk8.d.js"
+    "static/chunks/0pybfx.8agcwn.js"
+  ],
+  "/404": [
+    "static/chunks/13-xhbg7mr4d..js"
   ],
   "/_error": [
-    "static/chunks/11v5kt0n93g6b.js"
+    "static/chunks/12rc9wyo9b5b4.js"
   ],
   "__rewrites": {
     "afterFiles": [],
@@ -12,6 +15,7 @@ self.__BUILD_MANIFEST = {
   },
   "sortedPages": [
     "/",
+    "/404",
     "/_app",
     "/_error"
   ]
